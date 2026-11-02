@@ -10,7 +10,7 @@
 "use strict";
 
 {
-  const DEFAULT_SORT = "date-asc";
+  const DEFAULT_SORT = "date-desc";
   const FILTER_NAMES = /** @type {const} */ (["query", "state", "year", "group", "scope"]);
   const SEARCH_DELAY_MILLISECONDS = 120;
   // The same query as the sticky rules in styles.css: below it the toolbar scrolls away with the page.
@@ -462,13 +462,14 @@
     }
 
     /**
-     * A first click sorts any column up (dates oldest first, names A to Z); the next click reverses. The Sort select
+     * A first click sorts dates newest first and other columns A to Z; the next click reverses. The Sort select
      * holds the one list of orders, so a header never sets an order the select and a link cannot show.
      * @param {string} field
      */
     toggleSort(field) {
       const [currentField, currentDirection] = this.view.sort.split("-");
-      const direction = currentField === field && currentDirection === "asc" ? "desc" : "asc";
+      const firstDirection = field === "date" ? "desc" : "asc";
+      const direction = currentField === field ? (currentDirection === "asc" ? "desc" : "asc") : firstDirection;
       const sort = `${field}-${direction}`;
       if (isOffered(this.sortOrder, sort)) this.updateView({ sort });
     }

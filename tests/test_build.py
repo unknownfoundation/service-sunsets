@@ -194,7 +194,7 @@ class VersionChecksTest(unittest.TestCase):
         register = build.Register(VALID_SETTINGS["updated"], VALID_SETTINGS["repository_url"],
                                   VALID_SETTINGS["site_url"], (), (ahead, ended))
         section = build.render_versions_section(register)
-        self.assertLess(section.index("Old runtime"), section.index("Next runtime"))
+        self.assertLess(section.index("Next runtime"), section.index("Old runtime"))
         self.assertIn('<span class="date-label">Ended</span>', section)
         self.assertIn('<span class="date-label">Ends</span>', section)
         empty_register = build.Register(date(2026, 1, 1), "https://a.example", "https://b.example", ())
@@ -216,7 +216,7 @@ class StatesAndOrderTest(unittest.TestCase):
     def test_same_date_reads_a_to_z(self) -> None:
         later = build.Entry.from_table(dict(VALID_TABLE, slug="zeta", name="Zeta"))
         earlier = build.Entry.from_table(dict(VALID_TABLE, slug="alpha", name="Alpha"))
-        names = [entry.name for entry in build.oldest_first((later, earlier))]
+        names = [entry.name for entry in build.newest_first((later, earlier))]
         self.assertEqual(names, ["Alpha", "Zeta"])
         upcoming_names = [entry.name for entry in build.upcoming((later, earlier), date(2026, 6, 1))]
         self.assertEqual(upcoming_names, ["Alpha", "Zeta"])
@@ -228,7 +228,7 @@ class RenderingTest(unittest.TestCase):
                                                       announced=date(2024, 5, 1)))
         sections = re.findall(r'<tbody>\n<tr class="year-row"><th[^>]*>(\d{4})</th></tr>\n(.*?)\n</tbody>',
                               build.render_rows(register), re.DOTALL)
-        self.assertEqual([year for year, _ in sections], ["2025", "2027"])
+        self.assertEqual([year for year, _ in sections], ["2027", "2025"])
         self.assertTrue(all(rows.count('class="entry-row"') == 1 for _, rows in sections))
 
     def test_page_ids_are_unique(self) -> None:
@@ -287,16 +287,16 @@ class MarkdownTest(unittest.TestCase):
             self.assertRegex(line, r"^<!-- /?register:[a-z-]+ -->$")
         self.assertIn("\n**Updated ", readme)
 
-    def test_readme_tables_read_down_in_time(self) -> None:
-        """Every README table ends with its latest date; one date reads A to Z."""
+    def test_readme_tables_newest_first(self) -> None:
+        """Every README table, versions included, starts with its latest date."""
         register = build.load_register()
         assert register is not None
         months = {name: number for number, name in enumerate(build.MONTH_ABBREVIATIONS, start=1)}
-        for section in build.render_readme_body(register).split("\n## ")[1:]:
+        for section in build.render_readme(register).split("\n## ")[1:]:
             cells = re.findall(r"\| [A-Z][a-z ]+ (\d{1,2}) ([A-Z][a-z]{2}) (\d{4}) \|", section)
             days = [date(int(year), months[month], int(day)) for day, month, year in cells]
             with self.subTest(section=section.split("\n")[0]):
-                self.assertEqual(days, sorted(days))
+                self.assertEqual(days, sorted(days, reverse=True))
 
     def test_readme_sections_titles_and_escaping(self) -> None:
         register = example_register(

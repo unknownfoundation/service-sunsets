@@ -503,10 +503,10 @@ def format_day(day: date) -> str:
     return f"{day.day} {MONTH_ABBREVIATIONS[day.month - 1]} {day.year}"
 
 
-def oldest_first(entries: tuple[Entry, ...]) -> list[Entry]:
-    """The one order of every table, page and README: down in time, the latest date at the bottom; A to Z in a date."""
+def newest_first(entries: tuple[Entry, ...]) -> list[Entry]:
+    """The order of every table, page and README: the latest date at the top; names A to Z inside one date."""
     by_name = sorted(entries, key=lambda entry: entry.name.lower())
-    return sorted(by_name, key=lambda entry: key_date_of(entry).day)
+    return sorted(by_name, key=lambda entry: key_date_of(entry).day, reverse=True)
 
 
 def upcoming(entries: tuple[Entry, ...], day: date) -> list[Entry]:
@@ -600,7 +600,7 @@ def render_year_row(year: int) -> str:
 def render_rows(register: Register) -> str:
     '''One <tbody> per year, headed by its year, so `scope="rowgroup"` names the right rows.'''
     rows_by_year: dict[int, list[str]] = {}
-    for entry in oldest_first(register.entries):
+    for entry in newest_first(register.entries):
         rows_by_year.setdefault(key_date_of(entry).day.year, []).append(render_entry_row(entry, register.updated))
     return "\n".join(f"<tbody>\n{render_year_row(year)}\n" + "\n".join(rows) + "\n</tbody>"
                      for year, rows in rows_by_year.items())
@@ -649,7 +649,9 @@ def render_version_item(version: Version, day: date) -> str:
 
 
 def versions_by_date(register: Register) -> list[Version]:
-    return sorted(register.versions, key=lambda version: (version.ends, version.name.lower()))
+    """Newest end date first, like the tables; names A to Z inside one date."""
+    by_name = sorted(register.versions, key=lambda version: version.name.lower())
+    return sorted(by_name, key=lambda version: version.ends, reverse=True)
 
 
 def render_versions_section(register: Register) -> str:
@@ -704,10 +706,10 @@ def render_markdown_section(title: str, entries: list[Entry], day: date, intro: 
 
 
 def render_readme_body(register: Register) -> str:
-    day, ordered = register.updated, oldest_first(register.entries)
+    day, ordered = register.updated, newest_first(register.entries)
     by_state = {state: [entry for entry in ordered if state_on(entry, day) is state] for state in State}
     labels = {state: text.label for state, text in STATE_TEXTS.items()}
-    parts = render_markdown_section(f"## {labels[State.END_DATE_SET]}", upcoming(register.entries, day), day)
+    parts = render_markdown_section(f"## {labels[State.END_DATE_SET]}", by_state[State.END_DATE_SET], day)
     shut_down = by_state[State.SHUT_DOWN]
     for year in sorted({known(entry.ends).year for entry in shut_down}, reverse=True):
         period = str(year) if year >= FIRST_FULL_YEAR else f"late {year}"
