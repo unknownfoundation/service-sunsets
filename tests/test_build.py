@@ -276,6 +276,17 @@ class MarkdownTest(unittest.TestCase):
         self.assertEqual(build.escape_markdown_cell(text),
                          r"A \| B \[x\](https://evil.example) \<img src=x\> \*b\* \_c\_ \`d\` \\")
 
+    def test_readme_markers_stand_alone(self) -> None:
+        """A line that starts with "<!--" is raw HTML in Markdown: nothing may follow a marker on its line."""
+        register = build.load_register()
+        assert register is not None
+        readme = build.render_readme(register)
+        marker_lines = [line for line in readme.splitlines() if "<!--" in line]
+        self.assertTrue(marker_lines)
+        for line in marker_lines:
+            self.assertRegex(line, r"^<!-- /?register:[a-z-]+ -->$")
+        self.assertIn("\n**Updated ", readme)
+
     def test_readme_tables_read_down_in_time(self) -> None:
         """Every README table ends with its latest date; one date reads A to Z."""
         register = build.load_register()

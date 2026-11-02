@@ -1,6 +1,8 @@
 # Service Sunsets
 
-<!-- register:meta -->**Updated 2 Nov 2026** · 123 entries<!-- /register:meta --> · <!-- register:site-link -->[Search and filter it on the web →](https://unknownfoundation.github.io/service-sunsets/)<!-- /register:site-link -->
+<!-- register:summary -->
+**Updated 2 Nov 2026** · 123 entries · Search and filter it on the web: [https://unknownfoundation.github.io/service-sunsets/](https://unknownfoundation.github.io/service-sunsets/)
+<!-- /register:summary -->
 
 An unofficial list of retired AWS services, from 2025 to 2027, plus changes from 2024 that still apply.
 

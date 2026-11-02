@@ -741,7 +741,9 @@ def render_readme_meta(register: Register) -> str:
 
 
 def render_site_link(register: Register) -> str:
-    return f"[Search and filter it on the web →]({register.site_url})"
+    # The address itself is the link text, so a reader sees and can copy it; the [text](url) form keeps it in
+    # the link check, which a bare <url> would escape.
+    return f"Search and filter it on the web: [{register.site_url}]({register.site_url})"
 
 
 # ---------- files ----------
@@ -779,8 +781,9 @@ def render_page(register: Register) -> str:
 
 def render_readme(register: Register) -> str:
     blocks = {
-        "site-link": render_site_link(register),
-        "meta": render_readme_meta(register),
+        # Markers sit on lines of their own: a line that starts with "<!--" is raw HTML in Markdown, so
+        # anything after the marker on that line would show its asterisks and brackets literally.
+        "summary": f"\n{render_readme_meta(register)} · {render_site_link(register)}\n",
         "body": "\n" + render_readme_body(register) + "\n",
         "versions": render_readme_versions(register),
     }
