@@ -1,0 +1,1658 @@
+# The register: one [[entry]] per service or feature. build.py checks this file and renders it.
+# Format: see the docstring of build.py.
+
+updated = 2026-11-02
+# Where the repository and the published page live. They answer 404 until the repository is created.
+repository_url = "https://github.com/unknownfoundation/service-sunsets"
+site_url = "https://unknownfoundation.github.io/service-sunsets/"
+
+[[entry]]
+slug = "ads-discovery-connector"
+name = "AWS Application Discovery Service (Discovery Connector)"
+status = "shutdown"
+group = "Migration & transfer"
+scope = "feature"
+what = "VMware virtual appliance that collected server inventory and utilization for Application Discovery Service"
+ends = 2025-11-17
+replacement = "Application Discovery Service Agentless Collector"
+note = "Only the connector closed. Application Discovery Service itself takes no new customers."
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "amazon-chime"
+name = "Amazon Chime"
+status = "shutdown"
+group = "Communication"
+scope = "service"
+what = "Meetings, chat and business calling app"
+closed_to_new = 2025-02-19
+ends = 2026-02-20
+replacement = "AWS Wickr, or a third-party tool such as Zoom, Webex or Slack"
+note = "The Chime SDK is a separate service and continues."
+source = "https://aws.amazon.com/chime/"
+
+[[entry]]
+slug = "ams-advanced"
+name = "AWS Managed Services (AMS) Advanced"
+status = "sunset"
+group = "Management"
+scope = "service"
+what = "Operation of customer accounts by AWS staff: change requests, patching, monitoring, incidents and access"
+announced = 2026-06-30
+closed_to_new = 2026-06-30
+ends = 2027-06-30
+source = "https://docs.aws.amazon.com/managedservices/latest/userguide/SunsetPlan.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "app-mesh"
+name = "AWS App Mesh"
+status = "sunset"
+group = "Compute & containers"
+scope = "service"
+what = "Service mesh on Envoy sidecars for routing and observing traffic between services"
+announced = 2024-09-24
+ends = 2026-09-30
+replacement = "Amazon ECS Service Connect or Amazon VPC Lattice"
+source = "https://aws.amazon.com/blogs/containers/migrating-from-aws-app-mesh-to-amazon-ecs-service-connect/"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "app-runner"
+name = "AWS App Runner"
+status = "maintenance"
+group = "Compute & containers"
+scope = "service"
+what = "Hosting for a web app or API from source code or an image, with scaling and HTTPS built in"
+announced = 2026-03-31
+replacement = "Amazon ECS Express Mode"
+note = "Existing customers can still create resources."
+source = "https://docs.aws.amazon.com/apprunner/latest/dg/apprunner-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "application-discovery-service"
+name = "AWS Application Discovery Service"
+status = "maintenance"
+group = "Migration & transfer"
+scope = "service"
+what = "Inventory of servers, their utilization and dependencies, collected to plan a migration"
+announced = 2025-10-07
+closed_to_new = 2025-11-07
+replacement = "AWS Transform"
+source = "https://docs.aws.amazon.com/application-discovery/latest/userguide/application-discovery-service-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "appregistry"
+name = "AWS Service Catalog – Application Registry"
+status = "maintenance"
+group = "Management"
+scope = "feature"
+what = "Catalog of applications with their resources and metadata"
+announced = 2026-06-30
+closed_to_new = 2026-07-30
+replacement = "Tags, AWS Resource Groups and AWS Resource Explorer; CloudWatch Application Signals for monitoring"
+source = "https://docs.aws.amazon.com/servicecatalog/latest/arguide/app-registry-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "arc-readiness-check"
+name = "Amazon Application Recovery Controller (ARC) – Readiness Check"
+status = "maintenance"
+group = "Networking"
+scope = "feature"
+what = "Checks that resources were ready to fail over, for multi-Region applications"
+announced = 2026-03-31
+source = "https://docs.aws.amazon.com/r53recovery/latest/dg/arc-readiness-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "audit-manager"
+name = "AWS Audit Manager"
+status = "maintenance"
+group = "Security & identity"
+scope = "service"
+what = "Evidence collection from AWS accounts for audits against frameworks such as SOC 2"
+announced = 2026-03-31
+closed_to_new = 2026-04-30
+replacement = "AWS Config conformance packs"
+note = "Conformance packs have no SOC 2 or GDPR template and do not cover every audit control."
+source = "https://docs.aws.amazon.com/audit-manager/latest/userguide/audit-manager-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "aws-iq"
+name = "AWS IQ"
+status = "shutdown"
+group = "Business apps"
+scope = "service"
+what = "Marketplace for hiring AWS-certified freelancers and firms for short projects"
+ends = 2026-05-20
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "backint-sap-ase"
+name = "AWS Backint Agent for SAP ASE"
+status = "sunset"
+group = "Storage"
+scope = "feature"
+what = "Agent that backed up SAP ASE databases straight to Amazon S3"
+announced = 2026-09-29
+closed_to_new = 2026-10-29
+ends = 2027-09-29
+source = "https://docs.aws.amazon.com/sap/latest/sap-AnyDB/ase-backint-end-of-support.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "bedrock-agents-classic"
+name = "Amazon Bedrock Agents Classic"
+status = "maintenance"
+group = "AI & ML"
+scope = "feature"
+what = "First version of Bedrock Agents: a model called action-group APIs and knowledge bases"
+announced = 2026-06-30
+closed_to_new = 2026-07-30
+replacement = "Amazon Bedrock AgentCore"
+note = "Moving means a rebuild: AgentCore has a different runtime, tools and memory."
+source = "https://docs.aws.amazon.com/bedrock/latest/userguide/agents-classic-maintenance-mode.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "bugbust"
+name = "AWS BugBust"
+status = "shutdown"
+group = "Developer tools"
+scope = "service"
+what = "Team contests where developers fixed bugs found by CodeGuru Reviewer and earned points"
+ends = 2025-08-13
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "change-manager"
+name = "AWS Systems Manager Change Manager"
+status = "maintenance"
+group = "Management"
+scope = "feature"
+what = "Change requests with approvals that ran Automation runbooks, with Change Calendar to block changes at set times"
+announced = 2025-11-07
+closed_to_new = 2025-11-07
+replacement = "Change management tools from AWS Partners"
+source = "https://docs.aws.amazon.com/systems-manager/latest/userguide/change-manager-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "chatbot-rename"
+name = "AWS Chatbot → Amazon Q Developer in chat applications"
+status = "renamed"
+group = "Management"
+scope = "service"
+what = "Chat integration that sends AWS notifications to Slack and Microsoft Teams and runs AWS commands from chat"
+announced = 2025-02-19
+replacement = "No change needed"
+source = "https://docs.aws.amazon.com/chatbot/latest/adminguide/what-is.html"
+
+[[entry]]
+slug = "chime-sdk-carrier-voice-focus"
+name = "Amazon Chime SDK – Carrier Voice Focus"
+status = "shutdown"
+group = "Communication"
+scope = "feature"
+what = "Noise reduction on phone calls carried through Chime SDK Voice Connectors"
+ends = 2026-06-30
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "chime-sdk-proxy-sessions"
+name = "Amazon Chime SDK – Proxy Sessions"
+status = "shutdown"
+group = "Communication"
+scope = "feature"
+what = "Number masking so two people could call or text without seeing each other's real number"
+ends = 2026-03-31
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "chime-sdk-sip-media-application"
+name = "Amazon Chime SDK SIP Media Application"
+status = "maintenance"
+group = "Communication"
+scope = "feature"
+what = "Phone call handling written as Lambda functions: menus, routing, recording"
+announced = 2026-09-29
+closed_to_new = 2026-10-29
+replacement = "Amazon Connect Customer"
+source = "https://docs.aws.amazon.com/chime-sdk/latest/ag/sip-applications-maintenance-mode.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "cloud-directory"
+name = "Amazon Cloud Directory"
+status = "maintenance"
+group = "Databases"
+scope = "service"
+what = "Store for objects placed in several hierarchies at once, such as org charts or course catalogs"
+announced = 2025-10-07
+closed_to_new = 2025-11-07
+ends = 2027-07-24
+replacement = "Amazon DynamoDB or Amazon Neptune"
+source = "https://docs.aws.amazon.com/clouddirectory/latest/developerguide/cloud-directory-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "cloud9"
+name = "AWS Cloud9"
+status = "maintenance"
+group = "Developer tools"
+scope = "service"
+what = "Browser-based IDE running on an EC2 instance"
+announced = 2024-07-25
+replacement = "AWS IDE Toolkits or AWS CloudShell"
+source = "https://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "cloudendure-dr-govcloud"
+name = "CloudEndure Disaster Recovery in AWS GovCloud (US)"
+status = "shutdown"
+group = "Migration & transfer"
+scope = "region"
+what = "Disaster recovery service from CloudEndure, the predecessor of Elastic Disaster Recovery, kept running in AWS GovCloud (US)"
+ends = 2025-10-01
+note = "AWS's Full shutdown page lists it twice, on 24 Apr 2025 and on 1 Oct 2025. This list shows the later one."
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "cloudsearch"
+name = "Amazon CloudSearch"
+status = "maintenance"
+group = "Analytics"
+scope = "service"
+what = "Managed search for websites and apps"
+announced = 2024-07-25
+replacement = "Amazon OpenSearch Service"
+source = "https://aws.amazon.com/blogs/big-data/transition-from-amazon-cloudsearch-to-amazon-opensearch-service/"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "cloudtrail-lake"
+name = "AWS CloudTrail Lake"
+status = "maintenance"
+group = "Management"
+scope = "feature"
+what = "Managed store for CloudTrail and other audit logs, queried with SQL"
+announced = 2026-03-31
+closed_to_new = 2026-05-31
+replacement = "Amazon CloudWatch"
+note = "CloudTrail trails are not affected."
+source = "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-lake-service-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "cloudwatch-evidently"
+name = "Amazon CloudWatch Evidently"
+status = "shutdown"
+group = "Developer tools"
+scope = "feature"
+what = "Feature flags and A/B experiments for web and mobile apps"
+ends = 2025-10-17
+replacement = "AWS AppConfig feature flags"
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "codecatalyst"
+name = "Amazon CodeCatalyst"
+status = "maintenance"
+group = "Developer tools"
+scope = "service"
+what = "Source repos, issues, CI/CD workflows and dev environments in one service"
+announced = 2025-11-07
+closed_to_new = 2025-11-07
+replacement = "GitHub or GitLab, including GitLab Duo with Amazon Q"
+source = "https://docs.aws.amazon.com/codecatalyst/latest/userguide/migration.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "codeguru-reviewer"
+name = "Amazon CodeGuru Reviewer"
+status = "maintenance"
+group = "Developer tools"
+scope = "service"
+what = "Automated review comments on pull requests, generated with ML"
+announced = 2025-10-07
+closed_to_new = 2025-11-07
+replacement = "Amazon Q Developer or Amazon Inspector"
+source = "https://docs.aws.amazon.com/codeguru/latest/reviewer-ug/codeguru-reviewer-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "cognito-sync"
+name = "Amazon Cognito Sync"
+status = "maintenance"
+group = "Security & identity"
+scope = "feature"
+what = "Sync of small user data, such as app settings, across a user's devices"
+announced = 2026-06-30
+replacement = "AWS AppSync and Amazon DynamoDB"
+source = "https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-sync-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "comprehend-three-features"
+name = "Amazon Comprehend – Topic Modeling, Event Detection, and Prompt Safety Classification"
+status = "maintenance"
+group = "AI & ML"
+scope = "feature"
+what = "Topic modeling across documents, event detection in text, and classifying prompts as safe or unsafe"
+announced = 2026-03-31
+note = "The rest of Comprehend is not affected."
+source = "https://docs.aws.amazon.com/comprehend/latest/dg/comprehend-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "connect-voice-id"
+name = "Amazon Connect Customer Voice ID"
+status = "shutdown"
+group = "Business apps"
+scope = "feature"
+what = "Caller identity checks by voice in Amazon Connect, with flags on known fraudsters"
+ends = 2026-05-20
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "data-pipeline"
+name = "AWS Data Pipeline"
+status = "maintenance"
+group = "Analytics"
+scope = "service"
+what = "Scheduled jobs that moved and transformed data between AWS services"
+closed_to_new = 2024-07-25
+replacement = "AWS Glue, AWS Step Functions or Amazon MWAA"
+source = "https://aws.amazon.com/blogs/big-data/migrate-workloads-from-aws-data-pipeline/"
+
+[[entry]]
+slug = "datasync-discovery"
+name = "AWS DataSync Discovery"
+status = "shutdown"
+group = "Migration & transfer"
+scope = "feature"
+what = "Metrics collection from on-premises storage systems to plan a migration to AWS"
+ends = 2025-05-20
+note = "DataSync transfers keep working. Only Discovery closed."
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+guide = "https://docs.aws.amazon.com/datasync/latest/userguide/doc-history.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "deepcomposer"
+name = "AWS DeepComposer"
+status = "shutdown"
+group = "AI & ML"
+scope = "service"
+what = "MIDI keyboard and console for learning generative AI by making music"
+ends = 2025-09-17
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "device-defender-detect"
+name = "AWS IoT Device Defender – Detect"
+status = "maintenance"
+group = "IoT"
+scope = "feature"
+what = "Monitoring of device behavior metrics, with alerts on anomalies"
+announced = 2026-06-30
+closed_to_new = 2026-08-31
+source = "https://docs.aws.amazon.com/iot-device-defender/latest/devguide/dd-detect-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "devops-guru"
+name = "Amazon DevOps Guru"
+status = "sunset"
+group = "Management"
+scope = "service"
+what = "ML that watched application metrics, flagged unusual behavior and suggested fixes"
+announced = 2026-09-29
+closed_to_new = 2026-10-29
+ends = 2027-09-29
+replacement = "Amazon CloudWatch or Amazon DevOps Agent"
+note = "AWS's DevOps Guru guide gives 30 Sep 2027. Its lifecycle page gives 29 Sep 2027. This list shows the earlier one."
+source = "https://docs.aws.amazon.com/devops-guru/latest/userguide/devops-guru-end-of-support.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "direct-connect-shenzhen"
+name = "AWS Direct Connect (Shenzhen location)"
+status = "sunset"
+group = "Networking"
+scope = "feature"
+what = "Private network links from your premises into AWS through the Shenzhen Direct Connect location"
+announced = 2026-06-30
+ends = 2027-06-30
+note = "Direct Connect everywhere else is not affected."
+source = "https://docs.aws.amazon.com/directconnect/latest/UserGuide/Welcome.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "dms-fleet-advisor"
+name = "AWS Database Migration Service Fleet Advisor"
+status = "shutdown"
+group = "Migration & transfer"
+scope = "feature"
+what = "Inventory of on-premises databases, with suggested target engines and sizes on AWS"
+closed_to_new = 2025-05-20
+ends = 2026-05-20
+replacement = "AWS Migration Evaluator"
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+guide = "https://docs.aws.amazon.com/dms/latest/userguide/dms_fleet.advisor-end-of-support.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "dotnet-modernization-tools"
+name = "AWS .NET Modernization Tools"
+status = "maintenance"
+group = "Developer tools"
+scope = "feature"
+what = "Porting Assistant, App2Container, Refactoring Toolkit and Microservice Extractor for .NET apps"
+announced = 2025-11-07
+closed_to_new = 2025-11-07
+replacement = "AWS Transform"
+source = "https://docs.aws.amazon.com/portingassistant/latest/userguide/what-is-porting-assistant.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "elastic-transcoder"
+name = "Amazon Elastic Transcoder"
+status = "shutdown"
+group = "Media"
+scope = "service"
+what = "Conversion of video files in S3 into formats for phones, tablets and browsers"
+ends = 2025-11-13
+replacement = "AWS Elemental MediaConvert"
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "finspace"
+name = "Amazon FinSpace"
+status = "shutdown"
+group = "Analytics"
+scope = "service"
+what = "Managed kdb Insights environments and data management for capital-markets analytics"
+closed_to_new = 2025-10-07
+ends = 2026-10-07
+replacement = "Amazon DataZone, or self-managed kdb Insights on AWS"
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "forecast"
+name = "Amazon Forecast"
+status = "maintenance"
+group = "AI & ML"
+scope = "service"
+what = "Time-series forecasting with ML for demand, inventory and staffing"
+announced = 2024-07-29
+replacement = "Amazon SageMaker Canvas"
+source = "https://aws.amazon.com/blogs/machine-learning/transition-your-amazon-forecast-usage-to-amazon-sagemaker-canvas/"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "fraud-detector"
+name = "Amazon Fraud Detector"
+status = "maintenance"
+group = "Security & identity"
+scope = "service"
+what = "ML scoring of sign-ups, payments and other events for fraud risk"
+announced = 2025-10-07
+source = "https://docs.aws.amazon.com/frauddetector/latest/ug/frauddetector-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "fsx-file-gateway"
+name = "Amazon FSx File Gateway"
+status = "maintenance"
+group = "Storage"
+scope = "feature"
+what = "On-premises cache for FSx for Windows File Server shares"
+announced = 2024-10-28
+replacement = "Amazon FSx for Windows File Server, accessed directly"
+source = "https://aws.amazon.com/blogs/storage/switch-your-file-share-access-from-amazon-fsx-file-gateway-to-amazon-fsx-for-windows-file-server/"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "glue-ray-jobs"
+name = "AWS Glue – Ray jobs"
+status = "maintenance"
+group = "Analytics"
+scope = "feature"
+what = "Serverless Ray jobs in Glue for spreading Python workloads across many workers"
+announced = 2026-03-31
+closed_to_new = 2026-04-30
+source = "https://docs.aws.amazon.com/glue/latest/dg/awsglue-ray-jobs-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "greengrass-v1"
+name = "AWS IoT Greengrass V1"
+status = "sunset"
+group = "IoT"
+scope = "feature"
+what = "First version of IoT Greengrass, the edge runtime that ran Lambda functions on devices"
+announced = 2025-10-07
+ends = 2026-10-07
+replacement = "AWS IoT Greengrass V2"
+source = "https://aws.amazon.com/greengrass/"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "healthomics-variant-annotation-store"
+name = "AWS HealthOmics variant and annotation store"
+status = "maintenance"
+group = "Analytics"
+scope = "feature"
+what = "Stores for querying genomic variants and their annotations"
+announced = 2025-11-07
+closed_to_new = 2025-11-07
+replacement = "Amazon S3 table buckets, queried with Athena, EMR or Redshift"
+source = "https://docs.aws.amazon.com/omics/latest/dev/variant-store-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "incident-manager"
+name = "AWS Systems Manager Incident Manager"
+status = "maintenance"
+group = "Management"
+scope = "feature"
+what = "On-call schedules, escalation and response plans for incidents"
+announced = 2025-11-07
+closed_to_new = 2025-11-07
+source = "https://docs.aws.amazon.com/incident-manager/latest/userguide/incident-manager-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "infrastructure-composer"
+name = "AWS Infrastructure Composer"
+status = "sunset"
+group = "Developer tools"
+scope = "service"
+what = "Drag-and-drop designer for CloudFormation and SAM templates"
+announced = 2026-09-29
+closed_to_new = 2026-10-29
+ends = 2026-12-07
+replacement = "AWS Toolkit for Visual Studio Code"
+note = "AWS's Infrastructure Composer guide gives 7 Dec 2026. Its lifecycle page gives 29 Sep 2027. This list shows the earlier one."
+source = "https://docs.aws.amazon.com/infrastructure-composer/latest/dg/infrastructure-composer-end-of-support.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "inspector-classic"
+name = "Amazon Inspector Classic"
+status = "shutdown"
+group = "Security & identity"
+scope = "feature"
+what = "First version of Inspector, with agent-based vulnerability scans of EC2 instances"
+ends = 2026-05-20
+replacement = "Amazon Inspector"
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "iot-1-click"
+name = "AWS IoT 1-Click"
+status = "shutdown"
+group = "IoT"
+scope = "service"
+what = "Wi-Fi and cellular buttons that triggered a Lambda function on each press"
+ends = 2025-01-29
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "iot-analytics"
+name = "AWS IoT Analytics"
+status = "shutdown"
+group = "IoT"
+scope = "service"
+what = "Pipelines that collected, cleaned and stored device data, with SQL queries over it"
+closed_to_new = 2024-07-25
+ends = 2025-12-15
+replacement = "Kinesis Data Streams or Data Firehose into Amazon S3, queried with Athena"
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "iot-events"
+name = "AWS IoT Events"
+status = "shutdown"
+group = "IoT"
+scope = "service"
+what = "State machines that watched IoT data for events and triggered actions"
+announced = 2025-05-20
+ends = 2026-05-20
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "iot-fleet-hub"
+name = "Fleet Hub for AWS IoT Device Management"
+status = "shutdown"
+group = "IoT"
+scope = "feature"
+what = "No-code web app for watching device fleet health and acting on alarms"
+announced = 2024-10-17
+closed_to_new = 2024-10-17
+ends = 2025-10-18
+replacement = "The AWS IoT Device Management console"
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "iot-fleetwise"
+name = "AWS IoT FleetWise"
+status = "maintenance"
+group = "IoT"
+scope = "service"
+what = "Collection and filtering of vehicle sensor data before sending it to the cloud"
+announced = 2026-03-31
+source = "https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/iotfleetwise-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "kendra"
+name = "Amazon Kendra"
+status = "maintenance"
+group = "AI & ML"
+scope = "service"
+what = "Enterprise search over company documents with ML ranking and connectors"
+announced = 2026-06-30
+closed_to_new = 2026-07-30
+replacement = "Amazon Bedrock Managed Knowledge Base"
+source = "https://docs.aws.amazon.com/kendra/latest/dg/kendra-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "kinesis-analytics-sql"
+name = "Amazon Kinesis Data Analytics for SQL"
+status = "shutdown"
+group = "Analytics"
+scope = "service"
+what = "SQL queries over streaming data from Kinesis"
+closed_to_new = 2025-10-15
+ends = 2026-01-27
+replacement = "Amazon Managed Service for Apache Flink, or its Studio notebooks"
+note = "Applications have to be re-created in the new service."
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "lake-formation-governed-tables"
+name = "Governed Tables in AWS Lake Formation"
+status = "shutdown"
+group = "Analytics"
+scope = "feature"
+what = "Lake Formation table type with ACID transactions over data in S3"
+ends = 2024-12-31
+replacement = "Apache Iceberg, Apache Hudi or Delta Lake tables"
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "lookout-for-equipment"
+name = "Amazon Lookout for Equipment"
+status = "sunset"
+group = "AI & ML"
+scope = "service"
+what = "ML prediction of equipment failures from industrial sensor data"
+announced = 2025-10-07
+closed_to_new = 2025-10-07
+ends = 2026-10-07
+replacement = "AWS IoT SiteWise anomaly detection"
+source = "https://aws.amazon.com/blogs/machine-learning/preserve-access-and-explore-alternatives-for-amazon-lookout-for-equipment/"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "lookout-for-metrics"
+name = "Amazon Lookout for Metrics"
+status = "shutdown"
+group = "AI & ML"
+scope = "service"
+what = "ML anomaly detection in business and operational metrics"
+ends = 2025-10-10
+replacement = "Anomaly detection in OpenSearch, CloudWatch, Redshift ML, QuickSight or Glue Data Quality"
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "lookout-for-vision"
+name = "Amazon Lookout for Vision"
+status = "shutdown"
+group = "AI & ML"
+scope = "service"
+what = "ML defect detection in images from production lines"
+ends = 2025-10-31
+replacement = "Custom models on Amazon SageMaker AI or Amazon Bedrock, or AWS Partner solutions"
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "m2-application-testing"
+name = "AWS Mainframe Modernization Application Testing"
+status = "shutdown"
+group = "Migration & transfer"
+scope = "feature"
+what = "Replays of mainframe workloads to check that a migrated application gives the same results"
+ends = 2025-10-07
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "m2-managed-runtime"
+name = "AWS Mainframe Modernization Service (Managed Runtime Environment experience)"
+status = "maintenance"
+group = "Migration & transfer"
+scope = "feature"
+what = "AWS-managed runtime for migrated mainframe applications"
+announced = 2025-11-07
+replacement = "AWS Mainframe Modernization Self-Managed Experience"
+note = "The replacement is on this list too: the Self-Managed Experience takes no new customers."
+source = "https://docs.aws.amazon.com/m2/latest/userguide/mainframe-modernization-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "m2-self-managed"
+name = "AWS Mainframe Modernization – Self-Managed Experience"
+status = "maintenance"
+group = "Migration & transfer"
+scope = "feature"
+what = "Self-managed runtime and partner tools for replatforming or refactoring mainframe applications"
+announced = 2026-06-30
+replacement = "AWS Transform, or the vendors' own offerings"
+source = "https://docs.aws.amazon.com/m2/latest/userguide/mainframe-modernization-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "managed-blockchain"
+name = "Amazon Managed Blockchain"
+status = "sunset"
+group = "Databases"
+scope = "service"
+what = "Managed Hyperledger Fabric, Ethereum, Bitcoin and Polygon networks and nodes, plus a query API"
+announced = 2026-09-29
+closed_to_new = 2026-10-29
+ends = 2027-09-29
+replacement = "Self-managed nodes on AWS, or a third-party provider"
+source = "https://docs.aws.amazon.com/managed-blockchain/latest/hyperledger-fabric-dev/managed-blockchain-end-of-support.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "mechanical-turk"
+name = "Amazon Mechanical Turk"
+status = "shutdown"
+group = "Business apps"
+scope = "service"
+what = "Marketplace where businesses paid people for small online tasks, such as labeling data or answering surveys"
+ends = 2026-09-29
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "medialive-mediapackage-isolated"
+name = "AWS Elemental MediaLive and MediaPackage – Isolated Regions"
+status = "shutdown"
+group = "Media"
+scope = "region"
+what = "Live video encoding and packaging in AWS isolated Regions"
+ends = 2026-06-30
+note = "Commercial Regions are not affected."
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "mediastore"
+name = "AWS Elemental MediaStore"
+status = "shutdown"
+group = "Media"
+scope = "service"
+what = "Object storage tuned as an origin for live and on-demand video"
+ends = 2025-11-12
+replacement = "Amazon S3 for simple live workflows; AWS Elemental MediaPackage for advanced ones"
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "migration-hub"
+name = "AWS Migration Hub"
+status = "maintenance"
+group = "Migration & transfer"
+scope = "service"
+what = "Dashboard for tracking migration progress across AWS and partner tools"
+announced = 2025-11-07
+replacement = "AWS Transform"
+source = "https://docs.aws.amazon.com/migrationhub/latest/ug/migrationhub-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "monitron"
+name = "Amazon Monitron"
+status = "maintenance"
+group = "IoT"
+scope = "service"
+what = "Sensors and an ML service that watched the condition of industrial equipment"
+announced = 2024-10-31
+closed_to_new = 2024-10-31
+source = "https://aws.amazon.com/blogs/machine-learning/maintain-access-and-consider-alternatives-for-amazon-monitron/"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "myapplications"
+name = "AWS Management Console – myApplications"
+status = "maintenance"
+group = "Management"
+scope = "feature"
+what = "Console view of resources, cost and health grouped by application"
+announced = 2026-06-30
+replacement = "AWS Resource Groups"
+source = "https://docs.aws.amazon.com/awsconsolehelpdocs/latest/gsg/aws-myApplications-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "nice-enginframe"
+name = "AWS NICE EnginFrame"
+status = "shutdown"
+group = "Compute & containers"
+scope = "service"
+what = "Web portal for submitting HPC jobs and opening remote desktops"
+ends = 2025-09-25
+replacement = "Amazon DCV Access Console or Research and Engineering Studio, or the partner NI SP EF Portal"
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "panorama"
+name = "AWS Panorama"
+status = "shutdown"
+group = "AI & ML"
+scope = "service"
+what = "Appliance and SDK for running computer vision on existing IP cameras on site"
+ends = 2026-05-20
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "pinpoint"
+name = "Amazon Pinpoint"
+status = "sunset"
+group = "Communication"
+scope = "feature"
+what = "Segments, campaigns and journeys for email, SMS and push messages"
+announced = 2025-05-20
+closed_to_new = 2025-05-20
+ends = 2026-10-30
+replacement = "Amazon Connect for campaigns and customer profiles; AWS End User Messaging for SMS, voice and push; Amazon SES for email"
+note = "Only the engagement features are retired. The SMS, voice and push APIs were renamed AWS End User Messaging in 2024 and continue."
+source = "https://docs.aws.amazon.com/pinpoint/latest/userguide/migrate.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "private-5g"
+name = "AWS Private 5G"
+status = "shutdown"
+group = "Networking"
+scope = "service"
+what = "Private cellular network ordered in the AWS console, with radio units shipped by AWS"
+ends = 2025-05-20
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "proton"
+name = "AWS Proton"
+status = "sunset"
+group = "Developer tools"
+scope = "service"
+what = "Templates that let platform teams give developers self-service infrastructure and deployments"
+announced = 2025-10-07
+closed_to_new = 2025-10-07
+ends = 2026-10-07
+replacement = "CloudFormation Git sync, CodePipeline with CodeBuild, GitHub Actions, or the partner solution Harmonix on AWS"
+source = "https://docs.aws.amazon.com/proton/latest/userguide/proton-end-of-support.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "q-business"
+name = "Amazon Q Business"
+status = "maintenance"
+group = "AI & ML"
+scope = "service"
+what = "AI assistant over company data with connectors to business apps"
+announced = 2026-06-30
+replacement = "Amazon Quick"
+source = "https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/qbusiness-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "q-developer-ide-plugins"
+name = "Amazon Q Developer IDE plugins"
+status = "sunset"
+group = "Developer tools"
+scope = "feature"
+what = "Amazon Q coding assistant plugins for VS Code, JetBrains and other IDEs"
+announced = 2026-04-30
+closed_to_new = 2026-05-15
+ends = 2027-04-30
+replacement = "Kiro"
+source = "https://aws.amazon.com/blogs/devops/amazon-q-developer-end-of-support-announcement/"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "qldb"
+name = "Amazon Quantum Ledger Database (Amazon QLDB)"
+status = "shutdown"
+group = "Databases"
+scope = "service"
+what = "Ledger database with an immutable, cryptographically verifiable history of every change"
+ends = 2025-07-31
+replacement = "Amazon Aurora PostgreSQL"
+note = "Aurora does not keep a verifiable history by itself. You have to build it."
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "quicksight-rename"
+name = "Amazon QuickSight → Amazon Quick"
+status = "renamed"
+group = "Analytics"
+scope = "service"
+what = "BI service for dashboards and reports, now part of Amazon Quick"
+announced = 2025-10-09
+replacement = "No change needed: QuickSight APIs and dashboards keep working"
+source = "https://docs.aws.amazon.com/quick/latest/userguide/doc-history.html"
+
+[[entry]]
+slug = "rds-custom-oracle"
+name = "Amazon RDS Custom for Oracle"
+status = "sunset"
+group = "Databases"
+scope = "feature"
+what = "Managed Oracle with access to the host OS for apps that need customization"
+announced = 2026-03-31
+ends = 2027-03-31
+replacement = "Oracle on Amazon EC2, self-managed"
+source = "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/RDS-Custom-for-Oracle-end-of-support.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "rekognition-person-pathing"
+name = "Amazon Rekognition Person Pathing"
+status = "shutdown"
+group = "AI & ML"
+scope = "feature"
+what = "Tracking of the paths people took through a stored video"
+ends = 2025-10-31
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "rekognition-streaming-batch-moderation"
+name = "Amazon Rekognition – Streaming Events and Batch Image Content Moderation"
+status = "maintenance"
+group = "AI & ML"
+scope = "feature"
+what = "Alerts for people, pets and packages in live video, and bulk image moderation"
+announced = 2026-03-31
+closed_to_new = 2026-04-30
+replacement = "The Rekognition Image API, on video frames or on batches of images"
+source = "https://docs.aws.amazon.com/rekognition/latest/dg/rekognition-availability-changes.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "repost-private"
+name = "AWS re:Post Private"
+status = "sunset"
+group = "Management"
+scope = "service"
+what = "Private question-and-answer knowledge base for a company's cloud teams"
+announced = 2026-06-30
+ends = 2027-06-30
+replacement = "A third-party Q&A tool, such as Stack Overflow for Teams"
+source = "https://docs.aws.amazon.com/repostprivate/latest/userguide/repost-private-end-of-support.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "resource-groups-lifecycle-events"
+name = "AWS Resource Groups – Group Lifecycle Events"
+status = "maintenance"
+group = "Management"
+scope = "feature"
+what = "EventBridge events when a resource group's membership changed"
+announced = 2026-06-30
+replacement = "Your own setup with Amazon EventBridge, AWS Lambda and Amazon DynamoDB"
+source = "https://docs.aws.amazon.com/ARG/latest/userguide/resource-groups-gle-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "robomaker"
+name = "AWS RoboMaker"
+status = "shutdown"
+group = "Compute & containers"
+scope = "service"
+what = "Simulation and fleet tools for building and testing robot software with ROS"
+ends = 2025-09-10
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "s3-glacier-direct"
+name = "Amazon S3 Glacier Direct"
+status = "maintenance"
+group = "Storage"
+scope = "feature"
+what = "First version of Glacier: vaults with their own API, separate from the S3 storage classes"
+announced = 2025-10-07
+replacement = "Amazon S3 with the Glacier storage classes"
+source = "https://docs.aws.amazon.com/solutions/data-transfer-from-amazon-s3-glacier-vaults-to-amazon-s3/"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "s3-glacier-select"
+name = "Amazon S3 Glacier Select"
+status = "maintenance"
+group = "Storage"
+scope = "feature"
+what = "SQL over archived Glacier objects without restoring them in full"
+announced = 2024-07-25
+closed_to_new = 2024-07-25
+replacement = "Amazon Athena"
+source = "https://aws.amazon.com/blogs/storage/how-to-optimize-querying-your-data-in-amazon-s3/"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "s3-object-lambda"
+name = "Amazon S3 Object Lambda"
+status = "maintenance"
+group = "Storage"
+scope = "feature"
+what = "Lambda functions that changed S3 objects as they were read"
+announced = 2025-11-07
+closed_to_new = 2025-11-07
+replacement = "AWS Lambda behind Amazon CloudFront, Amazon API Gateway or a Lambda function URL"
+source = "https://docs.aws.amazon.com/AmazonS3/latest/userguide/amazons3-ol-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "s3-select"
+name = "Amazon S3 Select"
+status = "maintenance"
+group = "Storage"
+scope = "feature"
+what = "SQL over one S3 object to fetch part of it"
+announced = 2024-07-25
+closed_to_new = 2024-07-25
+replacement = "Amazon Athena, or filtering in your own code for one object"
+source = "https://aws.amazon.com/blogs/storage/how-to-optimize-querying-your-data-in-amazon-s3/"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "sagemaker-a2i"
+name = "Amazon SageMaker AI – A2I"
+status = "maintenance"
+group = "AI & ML"
+scope = "feature"
+what = "Human review loops for low-confidence ML predictions"
+announced = 2026-06-30
+source = "https://docs.aws.amazon.com/sagemaker/latest/dg/a2i-use-augmented-ai-a2i-human-review-loops.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "sagemaker-ai-rename"
+name = "Amazon SageMaker → Amazon SageMaker AI"
+status = "renamed"
+group = "AI & ML"
+scope = "service"
+what = "ML service for building, training and deploying models"
+announced = 2024-12-03
+replacement = "No change needed: APIs, CLI and CloudFormation names stay sagemaker"
+note = "The SageMaker name now covers the wider data and AI platform."
+source = "https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html"
+
+[[entry]]
+slug = "sagemaker-clarify"
+name = "Amazon SageMaker AI – Clarify"
+status = "maintenance"
+group = "AI & ML"
+scope = "feature"
+what = "Bias measurement for data and models, and explanations of predictions"
+announced = 2026-06-30
+replacement = "Open-source tools: pandas and scikit-learn for bias metrics, SHAP for explanations"
+source = "https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "sagemaker-debugger"
+name = "Amazon SageMaker AI – Debugger"
+status = "maintenance"
+group = "AI & ML"
+scope = "feature"
+what = "Tensor capture during training to catch problems such as vanishing gradients"
+announced = 2026-06-30
+source = "https://docs.aws.amazon.com/sagemaker/latest/dg/debugger-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "sagemaker-geospatial"
+name = "Amazon SageMaker AI – GeoSpatial"
+status = "maintenance"
+group = "AI & ML"
+scope = "feature"
+what = "ML on satellite imagery with built-in geospatial models"
+announced = 2026-06-30
+source = "https://docs.aws.amazon.com/sagemaker/latest/dg/geospatial.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "sagemaker-ground-truth"
+name = "Amazon SageMaker AI – Ground Truth"
+status = "maintenance"
+group = "AI & ML"
+scope = "feature"
+what = "Data labeling jobs with human workforces and automatic labeling"
+announced = 2026-06-30
+source = "https://docs.aws.amazon.com/sagemaker/latest/dg/sms.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "sagemaker-ground-truth-plus"
+name = "Amazon SageMaker AI – Ground Truth Plus"
+status = "shutdown"
+group = "AI & ML"
+scope = "feature"
+what = "Data labeling run end to end by an AWS-managed workforce"
+ends = 2026-06-30
+note = "Not the same as Ground Truth, which is in maintenance."
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "sagemaker-mechanical-turk"
+name = "Amazon SageMaker AI – Mechanical Turk"
+status = "sunset"
+group = "AI & ML"
+scope = "feature"
+what = "Public Mechanical Turk workforce as a choice for Ground Truth labeling jobs"
+announced = 2026-06-30
+ends = 2026-09-30
+source = "https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "sagemaker-model-monitor"
+name = "Amazon SageMaker AI – Model Monitor"
+status = "maintenance"
+group = "AI & ML"
+scope = "feature"
+what = "Drift detection for data and prediction quality on deployed endpoints"
+announced = 2026-06-30
+source = "https://docs.aws.amazon.com/sagemaker/latest/dg/model-monitor-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "sagemaker-profiler"
+name = "Amazon SageMaker AI – Profiler"
+status = "sunset"
+group = "AI & ML"
+scope = "feature"
+what = "Profiling of CPU and GPU use in SageMaker training jobs"
+announced = 2026-06-30
+ends = 2027-06-30
+replacement = "PyTorch or TensorFlow Profiler with TensorBoard, and Amazon CloudWatch"
+source = "https://docs.aws.amazon.com/sagemaker/latest/dg/profiler-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "sagemaker-role-manager"
+name = "Amazon SageMaker AI – Role Manager"
+status = "maintenance"
+group = "AI & ML"
+scope = "feature"
+what = "IAM roles for ML personas, built from preset permissions"
+announced = 2026-06-30
+replacement = "IAM, IAM Identity Center and IAM Access Analyzer, with CloudFormation or CDK"
+source = "https://docs.aws.amazon.com/sagemaker/latest/dg/role-manager-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "sagemaker-studio-lab"
+name = "Amazon SageMaker AI – Studio Lab"
+status = "maintenance"
+group = "AI & ML"
+scope = "feature"
+what = "Free JupyterLab notebook environment with fixed 12 GB RAM and 15 GB storage"
+announced = 2026-06-30
+closed_to_new = 2026-07-30
+replacement = "Amazon SageMaker Studio"
+source = "https://docs.aws.amazon.com/sagemaker/latest/dg/studio-lab-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "service-management-connector"
+name = "AWS Service Management Connector"
+status = "sunset"
+group = "Management"
+scope = "service"
+what = "Connector that linked ServiceNow and Jira Service Management to AWS provisioning and incidents"
+announced = 2026-03-31
+closed_to_new = 2026-03-31
+ends = 2027-03-31
+source = "https://docs.aws.amazon.com/smc/latest/ag/smc-end-of-support.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "simple-ad"
+name = "AWS Directory Service – Simple AD"
+status = "maintenance"
+group = "Security & identity"
+scope = "feature"
+what = "Samba-based directory with basic Active Directory features"
+announced = 2026-06-30
+replacement = "AWS Managed Microsoft AD or AD Connector"
+source = "https://docs.aws.amazon.com/directoryservice/latest/admin-guide/simple-ad-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "simspace-weaver"
+name = "AWS SimSpace Weaver"
+status = "shutdown"
+group = "Compute & containers"
+scope = "service"
+what = "Service for large spatial simulations split across many EC2 instances"
+ends = 2026-03-31
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "sitewise-data-processing-pack"
+name = "AWS IoT SiteWise Data Processing Pack"
+status = "maintenance"
+group = "IoT"
+scope = "feature"
+what = "Add-on that computed metrics and served dashboards on SiteWise Edge gateways"
+announced = 2025-10-07
+replacement = "Open-source tools, such as Node-RED, InfluxDB and Grafana"
+source = "https://docs.aws.amazon.com/iot-sitewise/latest/userguide/iotsitewise-dpp-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "sitewise-monitor"
+name = "AWS IoT SiteWise Monitor"
+status = "maintenance"
+group = "IoT"
+scope = "feature"
+what = "Web portals for viewing and sharing AWS IoT SiteWise industrial data"
+announced = 2025-10-07
+replacement = "Amazon Managed Grafana"
+source = "https://docs.aws.amazon.com/iot-sitewise/latest/appguide/iotsitewise-monitor-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "snowball-edge"
+name = "AWS Snowball Edge"
+status = "sunset"
+group = "Migration & transfer"
+scope = "service"
+what = "Rugged devices shipped to you to move data into AWS offline, or to run compute at the edge"
+announced = 2025-10-07
+ends = 2026-12-31
+replacement = "AWS DataSync, AWS Data Transfer Terminal or partners for moving data; AWS Outposts for edge compute"
+note = "The end date applies to commercial Regions. With Data Transfer Terminal you bring drives to an AWS site. Snowball came to you."
+source = "https://docs.aws.amazon.com/snowball/latest/developer-guide/snowball-edge-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "snowball-edge-older"
+name = "AWS Snowball Edge – older devices"
+status = "shutdown"
+group = "Migration & transfer"
+scope = "feature"
+what = "Earlier Snowball Edge models, including Storage Optimized 80 TB (V3S) and GPU (V3G)"
+closed_to_new = 2024-11-12
+ends = 2025-11-12
+replacement = "Current Snowball Edge devices, or AWS DataSync"
+note = "AWS's Full shutdown page also lists plain \"AWS Snowball Edge\" on this date. The remaining devices end on 31 Dec 2026."
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "snowblade"
+name = "AWS Snowblade"
+status = "shutdown"
+group = "Migration & transfer"
+scope = "service"
+what = "Rugged Snow family server for edge computing at disconnected sites"
+ends = 2024-11-12
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "snowcone"
+name = "AWS Snowcone"
+status = "shutdown"
+group = "Migration & transfer"
+scope = "service"
+what = "Small Snow device, in SSD and HDD models, for moving data to AWS or running compute at the edge"
+closed_to_new = 2024-11-12
+ends = 2025-11-12
+replacement = "AWS DataSync"
+note = "Discontinued: orders stopped on 12 Nov 2024 and support for existing devices ended on 12 Nov 2025."
+source = "https://aws.amazon.com/blogs/storage/aws-snow-device-updates/"
+
+[[entry]]
+slug = "sns-email-china"
+name = "Amazon Simple Notification Service – Email Subscriptions (China Regions)"
+status = "sunset"
+group = "Communication"
+scope = "region"
+what = "SNS notifications sent to email addresses in the Beijing and Ningxia Regions"
+announced = 2026-06-30
+ends = 2027-06-30
+note = "Other Regions are not affected."
+source = "https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "sns-message-data-protection"
+name = "Amazon Simple Notification Service – Message Data Protection"
+status = "maintenance"
+group = "Security & identity"
+scope = "feature"
+what = "Data protection policies on SNS topics that detected and masked sensitive data in messages"
+announced = 2026-03-31
+closed_to_new = 2026-04-30
+replacement = "AWS Lambda with Amazon Bedrock Guardrails"
+source = "https://docs.aws.amazon.com/sns/latest/dg/sns-message-data-protection-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "ssm-application-manager"
+name = "AWS Systems Manager – Application Manager"
+status = "maintenance"
+group = "Management"
+scope = "feature"
+what = "Console view for operating an application's resources together"
+announced = 2026-06-30
+closed_to_new = 2026-07-30
+replacement = "AWS Resource Groups, AWS Resource Explorer or CloudWatch Application Signals"
+source = "https://docs.aws.amazon.com/systems-manager/latest/userguide/application-manager-availability-change.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "thinkbox-deadline-10"
+name = "AWS Thinkbox Deadline 10"
+status = "maintenance"
+group = "Media"
+scope = "service"
+what = "Render farm manager that scheduled rendering jobs across machines"
+announced = 2025-11-07
+source = "https://aws.amazon.com/thinkbox-deadline/"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "timestream-liveanalytics"
+name = "Amazon Timestream for LiveAnalytics"
+status = "maintenance"
+group = "Databases"
+scope = "feature"
+what = "Serverless time-series database with its own SQL"
+announced = 2025-06-20
+replacement = "Amazon Timestream for InfluxDB"
+source = "https://docs.aws.amazon.com/timestream/latest/developerguide/timestream-for-influxdb.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "usage-report"
+name = "AWS Usage Report"
+status = "maintenance"
+group = "Management"
+scope = "feature"
+what = "Downloadable report of usage by service, usage type and operation"
+announced = 2025-10-07
+replacement = "AWS Cost and Usage Report"
+source = "https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "waf-classic"
+name = "AWS WAF Classic"
+status = "sunset"
+group = "Security & identity"
+scope = "feature"
+what = "First version of AWS WAF, with its own API and rule model"
+announced = 2025-10-07
+ends = 2026-10-07
+replacement = "AWS WAF"
+source = "https://docs.aws.amazon.com/waf/latest/developerguide/classic-waf-chapter.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "workdocs"
+name = "Amazon WorkDocs"
+status = "shutdown"
+group = "Business apps"
+scope = "service"
+what = "Company file storage and sharing with comments and editing"
+ends = 2025-04-25
+source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
+
+[[entry]]
+slug = "workmail"
+name = "Amazon WorkMail"
+status = "sunset"
+group = "Business apps"
+scope = "service"
+what = "Managed business email and calendars that worked with Outlook"
+announced = 2026-03-31
+closed_to_new = 2026-04-30
+ends = 2027-03-31
+replacement = "A third-party email provider, such as Zoho Mail or Zoom Mail"
+source = "https://docs.aws.amazon.com/workmail/latest/adminguide/workmail-end-of-support.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "workspaces-pcoip"
+name = "Amazon WorkSpaces – PCoIP"
+status = "sunset"
+group = "End-user computing"
+scope = "feature"
+what = "PCoIP streaming protocol for WorkSpaces desktops"
+announced = 2026-06-30
+closed_to_new = 2026-07-31
+ends = 2027-06-30
+replacement = "Amazon DCV protocol"
+note = "AWS's WorkSpaces PCoIP guide gives 31 Oct 2027. Its lifecycle page gives 30 Jun 2027. This list shows the earlier one."
+source = "https://docs.aws.amazon.com/workspaces/latest/adminguide/workspaces-pcoip-end-of-support.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "workspaces-pcoip-web-access"
+name = "Amazon WorkSpaces PCoIP Web Access"
+status = "maintenance"
+group = "End-user computing"
+scope = "feature"
+what = "Browser access to WorkSpaces that use the PCoIP protocol"
+announced = 2025-11-07
+replacement = "Amazon WorkSpaces Web Access over Amazon DCV"
+source = "https://docs.aws.amazon.com/workspaces/latest/userguide/amazon-workspaces-web-access.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "workspaces-pool"
+name = "Amazon WorkSpaces – Pool"
+status = "sunset"
+group = "End-user computing"
+scope = "feature"
+what = "Non-persistent WorkSpaces desktops handed out from a shared pool"
+announced = 2026-06-30
+closed_to_new = 2026-07-31
+ends = 2027-06-30
+note = "AWS's WorkSpaces Pools guide gives 31 Dec 2027. Its lifecycle page gives 30 Jun 2027. This list shows the earlier one."
+source = "https://docs.aws.amazon.com/workspaces/latest/adminguide/wsp-pools-end-of-support.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[entry]]
+slug = "workspaces-secure-browser"
+name = "Amazon WorkSpaces Secure Browser"
+status = "maintenance"
+group = "End-user computing"
+scope = "service"
+what = "Managed, isolated browser for reaching internal sites and SaaS apps"
+announced = 2026-09-29
+closed_to_new = 2026-10-29
+replacement = "Amazon WorkSpaces Applications with a Chrome image, or a third-party enterprise browser"
+source = "https://docs.aws.amazon.com/workspaces-web/latest/adminguide/workspaces-secure-browser-maintenance-mode.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html"]
+
+[[entry]]
+slug = "workspaces-thin-client"
+name = "Amazon WorkSpaces Thin Client"
+status = "sunset"
+group = "End-user computing"
+scope = "feature"
+what = "Thin client device that connected to Amazon WorkSpaces desktops and was managed through a console"
+announced = 2026-03-31
+ends = 2027-03-31
+replacement = "Thin clients from AWS Partners, such as Dell"
+source = "https://docs.aws.amazon.com/workspaces-thin-client/latest/ug/workspacesthinclient-end-of-support.html"
+registry = ["https://docs.aws.amazon.com/general/latest/gr/sunset_services.html"]
+
+[[version]]
+slug = "sdk-javascript-v2"
+name = "AWS SDK for JavaScript v2"
+ends = 2025-09-08
+replacement = "AWS SDK for JavaScript v3"
+source = "https://aws.amazon.com/blogs/developer/announcing-end-of-support-for-aws-sdk-for-javascript-v2/"
+note = "Maintenance mode from 8 Sep 2024."
+
+[[version]]
+slug = "sdk-java-v1"
+name = "AWS SDK for Java 1.x"
+ends = 2025-12-31
+replacement = "AWS SDK for Java v2"
+source = "https://aws.amazon.com/blogs/developer/announcing-end-of-support-for-aws-sdk-for-java-v1-x-on-december-31-2025/"
+note = "Maintenance mode from 31 Jul 2024."
+
+[[version]]
+slug = "amazon-linux-2"
+name = "Amazon Linux 2"
+ends = 2026-06-30
+replacement = "Amazon Linux 2023"
+source = "https://aws.amazon.com/amazon-linux-2/faqs/"
+
+[[version]]
+slug = "aws-cli-v1"
+name = "AWS CLI v1"
+ends = 2027-07-15
+replacement = "AWS CLI v2"
+source = "https://aws.amazon.com/blogs/developer/cli-v1-maintenance-mode-announcement/"
+note = "Maintenance mode from 15 Jul 2026."
+
+[[version]]
+slug = "lambda-python3-9"
+name = "Lambda runtime python3.9"
+ends = 2025-12-15
+replacement = "A newer Python runtime, up to python3.14"
+source = "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
+
+[[version]]
+slug = "lambda-ruby3-2"
+name = "Lambda runtime ruby3.2"
+ends = 2026-03-31
+replacement = "ruby3.4"
+source = "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
+
+[[version]]
+slug = "lambda-nodejs20-x"
+name = "Lambda runtime nodejs20.x"
+ends = 2026-04-30
+replacement = "nodejs24.x"
+source = "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
+
+[[version]]
+slug = "lambda-provided-al2"
+name = "Lambda runtime provided.al2"
+ends = 2026-07-31
+replacement = "provided.al2023"
+source = "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
+
+[[version]]
+slug = "lambda-python3-10"
+name = "Lambda runtime python3.10"
+ends = 2026-10-31
+replacement = "A newer Python runtime, up to python3.14"
+source = "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
+
+[[version]]
+slug = "lambda-dotnet8"
+name = "Lambda runtime dotnet8"
+ends = 2026-11-10
+replacement = "dotnet10"
+source = "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
+
+[[version]]
+slug = "lambda-dotnet9"
+name = "Lambda runtime dotnet9"
+ends = 2026-11-10
+replacement = "dotnet10"
+source = "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
+note = "Container images only."
+
+[[version]]
+slug = "lambda-ruby3-3"
+name = "Lambda runtime ruby3.3"
+ends = 2027-03-31
+replacement = "ruby3.4"
+source = "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
+
+[[version]]
+slug = "lambda-nodejs22-x"
+name = "Lambda runtime nodejs22.x"
+ends = 2027-04-30
+replacement = "nodejs24.x"
+source = "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
+
+[[version]]
+slug = "lambda-python3-11"
+name = "Lambda runtime python3.11"
+ends = 2027-06-30
+replacement = "A newer Python runtime, up to python3.14"
+source = "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
+
+[[version]]
+slug = "lambda-java8-al2"
+name = "Lambda runtime java8.al2"
+ends = 2027-06-30
+replacement = "java8.al2023, or java21 or java25"
+source = "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
+
+[[version]]
+slug = "lambda-java11"
+name = "Lambda runtime java11"
+ends = 2027-06-30
+replacement = "java21 or java25"
+source = "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"
+
+[[version]]
+slug = "lambda-java17"
+name = "Lambda runtime java17"
+ends = 2027-06-30
+replacement = "java21 or java25"
+source = "https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html"

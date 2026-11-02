@@ -1,0 +1,58 @@
+# Checks the list on every push and pull request, and publishes site/ to GitHub Pages from main.
+# One-time setup in the repository: Settings > Pages > Build and deployment > Source: GitHub Actions.
+name: Check and publish
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment at a time; a newer push waits instead of cancelling a deployment halfway.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Data is proven, page and README are fresh
+        run: python3 -I build.py release
+      - name: Python tests
+        run: python3 -I -m unittest discover --start-directory tests --top-level-directory .
+      - name: Date tests
+        run: node --test tests/
+      - name: Type check the scripts
+        run: >-
+          npx --yes --package typescript@5.6.3 tsc --noEmit --allowJs --checkJs --strict
+          --target es2022 --lib es2022,dom,dom.iterable site/js/theme.js site/js/dates.js site/js/app.js
+
+  publish:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: check
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4
