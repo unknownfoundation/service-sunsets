@@ -32,7 +32,7 @@ jobs:
       - name: Python tests
         run: python3 -I -m unittest discover --start-directory tests --top-level-directory .
       - name: Date tests
-        run: node --test tests/
+        run: node --test tests/*.test.mjs
       - name: Type check the scripts
         run: >-
           npx --yes --package typescript@5.6.3 tsc --noEmit --allowJs --checkJs --strict

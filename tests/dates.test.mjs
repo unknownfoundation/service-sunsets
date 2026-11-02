@@ -1,7 +1,7 @@
 // Tests for site/js/dates.js, the calendar arithmetic behind "in N days" and "End date set" -> "Shut down".
 //
 // Run from the repository root:
-//     node --test tests/
+//     node --test tests/*.test.mjs   (Node 22+ takes files or patterns, not a folder)
 //
 // dates.js is a browser script; it runs here in a fresh VM context, whose globalThis receives RegisterDates.
 // The checks that depend on the time zone run in child processes, one per zone in ZONES, because a process
