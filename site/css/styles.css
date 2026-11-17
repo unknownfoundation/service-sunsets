@@ -182,6 +182,9 @@ h2 { margin: 0 0 var(--space-md); font-size: var(--text-2xl); font-weight: var(-
 .sun-stop-low { stop-color: var(--sun-low); }
 @media (prefers-reduced-motion: no-preference) {
   .masthead-sun circle { animation: sun-set var(--duration-sun-set) both; }
+  /* A page opened in a background tab would set its sun unseen. With scripts the sun waits in its place
+     until theme.js marks the page as seen; without scripts it sets on load. */
+  :root.has-scripts:not(.is-seen) .masthead-sun circle { animation-play-state: paused; }
 }
 /* Once, on load: a beat in its place, a slow sinking behind the line, a beat set, then it appears in its
    place: it does not travel back up. While it is set and out of sight it turns clear and steps home (the two

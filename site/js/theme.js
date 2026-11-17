@@ -5,6 +5,9 @@
 //
 // It also marks <html> as running scripts, early, so styles.css shows the theme buttons and keeps room
 // for the toolbar from the first paint. Without scripts those controls would do nothing, so they stay hidden.
+//
+// And it marks <html> as seen once the page is on screen: styles.css holds the masthead's sun still until
+// then, so a page opened in a background tab sets its sun when the reader arrives, not before.
 "use strict";
 
 {
@@ -12,6 +15,7 @@
   const SYSTEM_THEME = "system";
   const THEMES = [SYSTEM_THEME, "light", "dark"];
   const SCRIPTS_CLASS = "has-scripts";
+  const SEEN_CLASS = "is-seen";
 
   /** @returns {string} the saved theme, or "system" when nothing valid is saved or storage is blocked */
   function readSavedTheme() {
@@ -61,7 +65,16 @@
     });
   }
 
+  /** Marks the page as seen the first time it is on screen, then stops listening. */
+  function markSeen() {
+    if (document.visibilityState !== "visible") return;
+    document.documentElement.classList.add(SEEN_CLASS);
+    document.removeEventListener("visibilitychange", markSeen);
+  }
+
   document.documentElement.classList.add(SCRIPTS_CLASS);
+  document.addEventListener("visibilitychange", markSeen);
+  markSeen();
   applyTheme(readSavedTheme());
   document.addEventListener("DOMContentLoaded", bindThemeControl);
 }
