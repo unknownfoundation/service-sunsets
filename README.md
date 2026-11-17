@@ -4,11 +4,9 @@
 **Updated 17 Nov 2026** · 123 entries · Search and filter it on the web: [https://unknownfoundation.github.io/service-sunsets/](https://unknownfoundation.github.io/service-sunsets/)
 <!-- /register:summary -->
 
-[![Service Sunsets: open the list on the web](site/og.png)](https://unknownfoundation.github.io/service-sunsets/)
+[![Service Sunsets: an unofficial list of retired AWS services. Open it on the web](site/og.png)](https://unknownfoundation.github.io/service-sunsets/)
 
-An unofficial list of retired AWS services, from 2025 to 2027, plus changes from 2024 that still apply. Maintained by the [Unknown Foundation](https://github.com/unknownfoundation).
-
-AWS retires services in batches. This list keeps them in one place: what each one did, when it ends, where to move, and the AWS page that says so.
+Covers 2025 to 2027, plus changes from 2024 that still apply. AWS retires services in batches; this list keeps them in one place, each with the AWS page that says so.
 
 The full list, with every table, is in [docs/list.md](docs/list.md).
 
@@ -22,8 +20,7 @@ Found it useful? Star the repository: it helps other teams find the list.
 
 ## Check your own accounts
 
-- **AWS Health** lists the scheduled changes that apply to your account and Regions. Where its dates differ from this list, trust AWS Health.
-- **Cost Explorer**, grouped by service, shows what you pay for. Look each name up here.
+**AWS Health** lists the scheduled changes that apply to your account and Regions. Where its dates differ from this list, trust AWS Health.
 
 ## Not on this list
 
@@ -33,6 +30,7 @@ This list follows AWS's lifecycle pages and adds only what another AWS page conf
 
 ## About this list
 
+- Maintained by the [Unknown Foundation](https://github.com/unknownfoundation).
 - Dates come from AWS's lifecycle pages ([Full shutdown](https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html), [Sunset](https://docs.aws.amazon.com/general/latest/gr/sunset_services.html), [Maintenance](https://docs.aws.amazon.com/general/latest/gr/maintenance_services.html)) and each service's own page. Found a wrong date? Open an issue in this repository with the AWS link that shows the right one.
 - Unofficial. Not affiliated with or endorsed by Amazon Web Services. AWS and the service names are trademarks of Amazon.com, Inc. or its affiliates. Other names are trademarks of their owners. Naming a product is not an endorsement.
 - Provided as is, without warranty. Not legal or professional advice.
