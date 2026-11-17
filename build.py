@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""Check the register in data/register.toml and render it into site/index.html and README.md.
+"""Check the register in data/register.toml and render it into site/index.html, README.md and docs/list.md.
 
 Run from anywhere:
-    python3 -I build.py write      check the data, then rewrite the generated blocks of both files
-    python3 -I build.py check      check the data and fail if either file is out of date
+    python3 -I build.py write      check the data, then rewrite the generated blocks of the three files
+    python3 -I build.py check      check the data and fail if any of the three files is out of date
     python3 -I build.py release    as check, and also fail while any entry still has `verify`
-    python3 -I build.py links      open every link of the data, the page and the README (needs network)
+    python3 -I build.py links      open every link of the data, the page, the README and the list (needs network)
 
 Prints labelled lines (`entries: 125`, `state shut-down: 46`, `link 404: <url>`, ...). Data errors go to
 stderr as `error <slug>: <what is wrong>`. Exit code: 0 ok, 1 a check failed, 2 a file is missing or malformed.
 
 Only the text between <!-- register:NAME --> and <!-- /register:NAME --> is generated; the rest of
-both files is written by hand. Output depends on the data file alone, never on the clock, so two runs
+the three files is written by hand. Output depends on the data file alone, never on the clock, so two runs
 give the same bytes. The page moves an entry from "End date set" to "Shut down" in the browser once
 the date passes.
 
@@ -59,7 +59,9 @@ from urllib.parse import urlparse
 ROOT = Path(__file__).resolve().parent
 DATA_PATH = ROOT / "data" / "register.toml"
 PAGE_PATH = ROOT / "site" / "index.html"
+SOCIAL_IMAGE_PATH = ROOT / "site" / "og.png"
 README_PATH = ROOT / "README.md"
+LIST_PATH = ROOT / "docs" / "list.md"
 
 Table = dict[str, Any]  # one table as tomllib reads it
 
@@ -164,6 +166,14 @@ TABLE_COLUMN_COUNT = 5
 # The window starts on 1 Nov 2024, so 2024 holds two months only and is titled "late 2024".
 FIRST_FULL_YEAR = 2025
 MONTH_ABBREVIATIONS = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+# The page's "Retirements by month": one bar for every month from the window's first month to the last month of
+# its last year, both included. The stylesheet reads the month count and each bar's count from the markup.
+TIMELINE_FIRST_MONTH = date(2024, 11, 1)
+TIMELINE_LAST_MONTH = date(2027, 12, 1)
+TIMELINE_CAPTION = "Retirements by month"
+# A year with fewer months than this on the timeline has no room for its label on a phone; styles.css hides
+# the labels marked `is-short` there.
+TIMELINE_SHORT_YEAR_MONTHS = 3
 SLUG_PATTERN = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 # A replacement that starts this way names no product ("Another tool") and tells the reader nothing.
 VAGUE_REPLACEMENT_PATTERN = re.compile(r"^(?:another|other|alternative|a different|some)\b", re.IGNORECASE)
@@ -176,6 +186,28 @@ NO_REPLACEMENT_TEXT = "Not named. See the AWS page"
 # The class styles.css defines to hide text from sight but not from screen readers.
 VISUALLY_HIDDEN_CLASS = "visually-hidden"
 MOVE_TO_WORDS = "Move to: "
+# Who keeps the list; its page is the owner of `repository_url` on GitHub.
+PUBLISHER_NAME = "Unknown Foundation"
+# The link preview. The picture is site/og.png, drawn from design/og-card.html; its size is the one chats and
+# social networks ask for, and it carries no count or date, so it does not go stale with the data.
+SOCIAL_TITLE = "Service Sunsets"
+SOCIAL_DESCRIPTION = ("Unofficial list of retired AWS services: what each one did, when it ends, where to move, "
+                      "and the AWS page that says so.")
+SOCIAL_IMAGE_NAME = "og.png"
+SOCIAL_IMAGE_SIZE = (1200, 630)
+SOCIAL_IMAGE_ALT = "Service Sunsets: an unofficial list of retired AWS services."
+# Drawn like the other icons of the page: an outline in the text color, sized by styles.css.
+STAR_ICON = ('<svg aria-hidden="true" viewBox="0 0 20 20">'
+             '<path d="m10 2.6 2.3 4.7 5.2.7-3.8 3.7.9 5.1-4.6-2.4-4.6 2.4.9-5.1L2.5 8l5.2-.7z"/></svg>')
+# GitHub's own mark, which GitHub lets a page use to link to GitHub: in the masthead it says where the link
+# goes before the words are read. A filled shape, so styles.css fills it instead of outlining it.
+GITHUB_ICON = ('<svg class="icon-filled" aria-hidden="true" viewBox="0 0 16 16"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 '
+               '8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 '
+               '3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27'
+               '-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 '
+               '2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82'
+               '-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38'
+               'A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>')
 MARKDOWN_SPECIAL_PATTERN = re.compile(r"([\\|\[\]<>*_`])")
 
 # Ids the generated blocks write besides the slugs; a slug equal to one of them would take its place.
@@ -250,6 +282,7 @@ class KeyDate(NamedTuple):
 class RenderedFiles(NamedTuple):
     page: str
     readme: str
+    list: str
 
 
 class LinkResult(NamedTuple):
@@ -620,6 +653,54 @@ def render_upcoming_cards(register: Register) -> str:
                      for position, entry in enumerate(entries))
 
 
+def months_between(first: date, last: date) -> list[date]:
+    """The first day of every month from `first`'s month to `last`'s, both included."""
+    months, month = [], first.replace(day=1)
+    while month <= last:
+        months.append(month)
+        month = date(month.year + month.month // 12, month.month % 12 + 1, 1)
+    return months
+
+
+def count_ends_by_month(register: Register) -> list[tuple[date, int]]:
+    """Every month of the timeline, gaps included, with how many entries end in it."""
+    counts: dict[tuple[int, int], int] = {}
+    for entry in register.entries:
+        if entry.ends:
+            month = (entry.ends.year, entry.ends.month)
+            counts[month] = counts.get(month, 0) + 1
+    return [(month, counts.get((month.year, month.month), 0))
+            for month in months_between(TIMELINE_FIRST_MONTH, TIMELINE_LAST_MONTH)]
+
+
+def render_month_bar(month: date, count: int, is_past: bool) -> str:
+    """One bar; its height is the count, which a screen reader hears and a pointer shows as the title."""
+    words = f"{MONTH_ABBREVIATIONS[month.month - 1]} {month.year}: {count} {'entry' if count == 1 else 'entries'}"
+    past = " is-past" if is_past else ""
+    return (f'<li class="timeline-month{past}" style="--count: {count}" title="{escape(words)}">'
+            f"{render_hidden_text(words)}</li>")
+
+
+def render_timeline_years(months: list[date]) -> str:
+    months_per_year: dict[int, int] = {}
+    for month in months:
+        months_per_year[month.year] = months_per_year.get(month.year, 0) + 1
+    return "".join(f'<span class="timeline-year{" is-short" if count < TIMELINE_SHORT_YEAR_MONTHS else ""}"'
+                   f' style="--months: {count}">{year}</span>' for year, count in months_per_year.items())
+
+
+def render_timeline_figure(register: Register) -> str:
+    """Bars of the months before `updated`'s month are marked past; the build never reads the clock."""
+    counts = count_ends_by_month(register)
+    first_month_ahead = register.updated.replace(day=1)
+    bars = "\n".join(render_month_bar(month, count, month < first_month_ahead) for month, count in counts)
+    years = render_timeline_years([month for month, _ in counts])
+    return (f'<figure class="timeline" style="--months: {len(counts)}">\n'
+            f"<figcaption>{TIMELINE_CAPTION}</figcaption>\n"
+            f'<ol class="timeline-bars">\n{bars}\n</ol>\n'
+            f'<div class="timeline-years" aria-hidden="true">{years}</div>\n</figure>')
+
+
 def render_state_legend() -> str:
     return "\n".join(f"<dt>{render_state_badge(state)}</dt><dd>{escape(text.meaning)}</dd>"
                      for state, text in STATE_TEXTS.items())
@@ -675,6 +756,36 @@ def render_license_link(register: Register) -> str:
 
 def render_issue_link(register: Register) -> str:
     return f'<a href="{escape(register.repository_url)}/issues">Open an issue</a>'
+
+
+def render_star_link(register: Register, icon: str = STAR_ICON) -> str:
+    """The way to the repository: under the list with a star, in the masthead with GitHub's mark."""
+    return f'<a class="repo-link" href="{escape(register.repository_url)}">{icon}Star on GitHub</a>'
+
+
+def render_publisher_link(register: Register) -> str:
+    """The organization is the repository's owner on GitHub: the repository address without its last part."""
+    return f'<a href="{escape(register.repository_url.rsplit("/", 1)[0])}">{escape(PUBLISHER_NAME)}</a>'
+
+
+def render_social_meta(register: Register) -> str:
+    """What a chat or a social network shows when someone pastes the page's address. The picture needs a full
+    address, so it is built from `site_url`; tests/test_build.py holds the file to SOCIAL_IMAGE_SIZE."""
+    width, height = SOCIAL_IMAGE_SIZE
+    tags = (
+        f'<link rel="canonical" href="{escape(register.site_url)}">',
+        '<meta property="og:type" content="website">',
+        f'<meta property="og:site_name" content="{escape(PUBLISHER_NAME)}">',
+        f'<meta property="og:title" content="{escape(SOCIAL_TITLE)}">',
+        f'<meta property="og:description" content="{escape(SOCIAL_DESCRIPTION)}">',
+        f'<meta property="og:url" content="{escape(register.site_url)}">',
+        f'<meta property="og:image" content="{escape(register.site_url + SOCIAL_IMAGE_NAME)}">',
+        f'<meta property="og:image:width" content="{width}">',
+        f'<meta property="og:image:height" content="{height}">',
+        f'<meta property="og:image:alt" content="{escape(SOCIAL_IMAGE_ALT)}">',
+        '<meta name="twitter:card" content="summary_large_image">',
+    )
+    return "\n" + "\n".join(tags) + "\n"
 
 
 # ---------- Markdown ----------
@@ -766,9 +877,14 @@ def read_text(path: Path) -> str:
 
 def render_page(register: Register) -> str:
     blocks = {
+        "social": render_social_meta(register),
         "labels": render_labels_script(),
+        "star-link": render_star_link(register, GITHUB_ICON),
         "meta": render_page_meta(register),
+        "publisher-link": render_publisher_link(register),
+        "star-button": render_star_link(register),
         "upcoming": "\n" + render_upcoming_cards(register) + "\n",
+        "timeline": "\n" + render_timeline_figure(register) + "\n",
         "rows": "\n" + render_rows(register) + "\n",
         "legend": "\n" + render_state_legend() + "\n",
         "issue-link": render_issue_link(register),
@@ -781,13 +897,15 @@ def render_page(register: Register) -> str:
     return page
 
 
+def render_summary(register: Register) -> str:
+    return f"\n{render_readme_meta(register)} · {render_site_link(register)}\n"
+
+
 def render_readme(register: Register) -> str:
     blocks = {
         # Markers sit on lines of their own: a line that starts with "<!--" is raw HTML in Markdown, so
         # anything after the marker on that line would show its asterisks and brackets literally.
-        "summary": f"\n{render_readme_meta(register)} · {render_site_link(register)}\n",
-        "body": "\n" + render_readme_body(register) + "\n",
-        "versions": render_readme_versions(register),
+        "summary": render_summary(register),
     }
     readme = read_text(README_PATH)
     for block_name, content in blocks.items():
@@ -795,23 +913,37 @@ def render_readme(register: Register) -> str:
     return readme
 
 
+def render_list(register: Register) -> str:
+    """docs/list.md: every table, the ones the README used to carry."""
+    blocks = {
+        "summary": render_summary(register),
+        "body": "\n" + render_readme_body(register) + "\n",
+        "versions": render_readme_versions(register),
+    }
+    list_text = read_text(LIST_PATH)
+    for block_name, content in blocks.items():
+        list_text = replace_block(list_text, block_name, content, LIST_PATH.name)
+    return list_text
+
+
 def render_files(register: Register) -> RenderedFiles:
-    return RenderedFiles(render_page(register), render_readme(register))
+    return RenderedFiles(render_page(register), render_readme(register), render_list(register))
 
 
 def find_stale_files(rendered: RenderedFiles) -> list[str]:
-    targets = ((PAGE_PATH, rendered.page), (README_PATH, rendered.readme))
+    targets = ((PAGE_PATH, rendered.page), (README_PATH, rendered.readme), (LIST_PATH, rendered.list))
     return [str(path.relative_to(ROOT)) for path, text in targets if read_text(path) != text]
 
 
 # ---------- links ----------
 
 def collect_links(register: Register, rendered: RenderedFiles) -> list[str]:
-    """Every http(s) link a reader can follow: the data's, and the hand-written ones in both files."""
+    """Every http(s) link a reader can follow: the data's, and the hand-written ones in the three files."""
     urls = {url for entry in register.entries for url in (entry.source, entry.guide, *entry.registry) if url}
     urls |= {version.source for version in register.versions}
     urls |= {html.unescape(url) for url in HTML_LINK_PATTERN.findall(rendered.page)}
     urls |= set(MARKDOWN_LINK_PATTERN.findall(rendered.readme))
+    urls |= set(MARKDOWN_LINK_PATTERN.findall(rendered.list))
     return sorted(urls)
 
 
@@ -891,8 +1023,10 @@ def load_register() -> Register | None:
 def write_files(rendered: RenderedFiles) -> int:
     PAGE_PATH.write_text(rendered.page, encoding="utf-8")
     README_PATH.write_text(rendered.readme, encoding="utf-8")
+    LIST_PATH.write_text(rendered.list, encoding="utf-8")
     print(f"wrote: {PAGE_PATH.relative_to(ROOT)}")
     print(f"wrote: {README_PATH.relative_to(ROOT)}")
+    print(f"wrote: {LIST_PATH.relative_to(ROOT)}")
     return 0
 
 

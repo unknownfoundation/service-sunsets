@@ -264,10 +264,54 @@ class RenderingTest(unittest.TestCase):
 
     def test_links_come_from_data_page_and_readme(self) -> None:
         register = example_register(dict(VALID_TABLE, guide="https://aws.amazon.com/guide"))
-        rendered = build.RenderedFiles("<a href='https://a.example/x?y=1&amp;z=2'>a</a>", "[b](https://b.example/)")
+        rendered = build.RenderedFiles("<a href='https://a.example/x?y=1&amp;z=2'>a</a>", "[b](https://b.example/)",
+                                       "[c](https://c.example/)")
         self.assertEqual(build.collect_links(register, rendered),
                          ["https://a.example/x?y=1&z=2", "https://aws.amazon.com/guide", "https://b.example/",
-                          VALID_TABLE["source"]])
+                          "https://c.example/", VALID_TABLE["source"]])
+
+
+def month_number(month: date) -> int:
+    return month.year * 12 + month.month - 1
+
+
+class TimelineTest(unittest.TestCase):
+    def test_months_run_without_a_gap_from_first_to_last(self) -> None:
+        months = [month for month, _ in build.count_ends_by_month(build.load_register())]
+        self.assertEqual((months[0], months[-1]), (build.TIMELINE_FIRST_MONTH, build.TIMELINE_LAST_MONTH))
+        self.assertEqual([month_number(month) for month in months],
+                         list(range(month_number(months[0]), month_number(months[-1]) + 1)))
+        self.assertTrue(all(month.day == 1 for month in months))
+
+    def test_counts_add_up_to_the_entries_ending_inside_the_span(self) -> None:
+        register = build.load_register()
+        counts = build.count_ends_by_month(register)
+        first, last = month_number(build.TIMELINE_FIRST_MONTH), month_number(build.TIMELINE_LAST_MONTH)
+        inside = [entry for entry in register.entries if entry.ends and first <= month_number(entry.ends) <= last]
+        self.assertEqual(sum(count for _, count in counts), len(inside))
+        figure = build.render_timeline_figure(register)
+        self.assertEqual(sum(int(count) for count in re.findall(r'style="--count: (\d+)"', figure)), len(inside))
+
+    def test_planted_dates_give_the_planted_counts(self) -> None:
+        def ending(slug: str, ends: date) -> dict:
+            return dict(VALID_TABLE, slug=slug, name=slug, announced=date(2024, 1, 1), ends=ends)
+        register = example_register(
+            ending("march-early", date(2025, 3, 1)), ending("march-late", date(2025, 3, 31)),
+            ending("july", date(2026, 7, 15)), ending("after-the-span", date(2028, 1, 1)),
+            planted({"slug": "no-end", "name": "No end", "status": "maintenance", "ends": None}))
+        counts = {month: count for month, count in build.count_ends_by_month(register) if count}
+        self.assertEqual(counts, {date(2025, 3, 1): 2, date(2026, 7, 1): 1})
+        figure = build.render_timeline_figure(register)
+        self.assertIn('title="Mar 2025: 2 entries"><span class="visually-hidden">Mar 2025: 2 entries</span>', figure)
+        self.assertIn('title="Jul 2026: 1 entry"', figure)
+        self.assertIn(f'style="--months: {len(build.count_ends_by_month(register))}"', figure)
+
+    def test_months_before_updated_are_past(self) -> None:
+        # VALID_SETTINGS sets `updated` to 2 Nov 2026: October is past, November is ahead.
+        figure = build.render_timeline_figure(example_register(VALID_TABLE))
+        self.assertIn('class="timeline-month is-past" style="--count: 0" title="Oct 2026: 0 entries"', figure)
+        self.assertIn('class="timeline-month" style="--count: 0" title="Nov 2026: 0 entries"', figure)
+        self.assertIn('class="timeline-month" style="--count: 1" title="Jan 2027: 1 entry"', figure)
 
 
 class MarkdownTest(unittest.TestCase):
@@ -292,7 +336,7 @@ class MarkdownTest(unittest.TestCase):
         register = build.load_register()
         assert register is not None
         months = {name: number for number, name in enumerate(build.MONTH_ABBREVIATIONS, start=1)}
-        for section in build.render_readme(register).split("\n## ")[1:]:
+        for section in build.render_list(register).split("\n## ")[1:]:
             cells = re.findall(r"\| [A-Z][a-z ]+ (\d{1,2}) ([A-Z][a-z]{2}) (\d{4}) \|", section)
             days = [date(int(year), months[month], int(day)) for day, month, year in cells]
             with self.subTest(section=section.split("\n")[0]):
@@ -315,6 +359,63 @@ class MarkdownTest(unittest.TestCase):
         self.assertIn(f"## No new customers\n\n{build.STATE_TEXTS[build.State.NO_NEW_CUSTOMERS].meaning}\n", body)
         self.assertIn(f"| Amazon A \\| B | Stored example objects for tests | Ends 1 Jan 2027 | "
                       f"{build.NO_REPLACEMENT_TEXT} |", body)
+
+
+    def test_readme_holds_no_full_tables_and_points_to_the_list(self) -> None:
+        register = build.load_register()
+        assert register is not None
+        readme = build.render_readme(register)
+        self.assertEqual([line for line in readme.splitlines() if line.startswith("| ")], [])
+        self.assertIn("(docs/list.md)", readme)
+
+    def test_list_names_every_entry_of_the_register(self) -> None:
+        register = build.load_register()
+        assert register is not None
+
+        def count_entry_rows(text: str) -> int:
+            entries_part = text.split(f"\n## {build.VERSIONS_TITLE}")[0]
+            return sum(1 for line in entries_part.splitlines()
+                       if line.startswith("| ") and not line.startswith("| Service |"))
+
+        self.assertEqual(count_entry_rows(build.render_list(register)), len(register.entries))
+        self.assertEqual(count_entry_rows(build.LIST_PATH.read_text(encoding="utf-8")), len(register.entries))
+
+
+def read_png_size(data: bytes) -> tuple[int, int]:
+    """Width and height from the IHDR chunk, the first chunk after the 8-byte signature."""
+    if data[:8] != b"\x89PNG\r\n\x1a\n":
+        raise ValueError("not a PNG")
+    return int.from_bytes(data[16:20], "big"), int.from_bytes(data[20:24], "big")
+
+
+ONE_PIXEL_PNG = (b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00"
+                 b"\x1f\x15\xc4\x89")
+
+
+class SocialPreviewTest(unittest.TestCase):
+    def test_picture_exists_at_the_size_the_page_declares(self) -> None:
+        self.assertTrue(build.SOCIAL_IMAGE_PATH.is_file(), f"{build.SOCIAL_IMAGE_PATH} is missing")
+        self.assertEqual(read_png_size(build.SOCIAL_IMAGE_PATH.read_bytes()), build.SOCIAL_IMAGE_SIZE)
+
+    def test_size_check_can_fail(self) -> None:
+        self.assertEqual(read_png_size(ONE_PIXEL_PNG), (1, 1))
+        self.assertNotEqual(read_png_size(ONE_PIXEL_PNG), build.SOCIAL_IMAGE_SIZE)
+        with self.assertRaises(ValueError):
+            read_png_size(b"GIF89a" + bytes(30))
+
+    def test_preview_tags_hold_the_picture_and_one_canonical_address(self) -> None:
+        register = example_register(VALID_TABLE)
+        meta = build.render_social_meta(register)
+        self.assertIn(f'<meta property="og:image" content="{register.site_url + build.SOCIAL_IMAGE_NAME}">', meta)
+        self.assertEqual(re.findall(r'rel="canonical" href="([^"]*)"', meta), [register.site_url])
+        self.assertEqual(meta.count('rel="canonical"'), 1)
+
+    def test_links_to_the_repository_and_its_owner(self) -> None:
+        register = example_register(VALID_TABLE)
+        self.assertEqual(re.findall(r'href="([^"]*)"', build.render_star_link(register)),
+                         [register.repository_url])
+        self.assertEqual(re.findall(r'href="([^"]*)"', build.render_publisher_link(register)),
+                         [register.repository_url.rsplit("/", 1)[0]])
 
 
 class LinkCheckTest(unittest.TestCase):
@@ -363,8 +464,15 @@ class FilesTest(unittest.TestCase):
         register = build.load_register()
         self.assertIsNotNone(register)
         rendered = build.render_files(register)
-        changed = build.RenderedFiles(rendered.page + "<!-- planted -->", rendered.readme)
+        changed = build.RenderedFiles(rendered.page + "<!-- planted -->", rendered.readme, rendered.list)
         self.assertIn("site/index.html", build.find_stale_files(changed))
+
+    def test_stale_list_is_caught(self) -> None:
+        register = build.load_register()
+        self.assertIsNotNone(register)
+        rendered = build.render_files(register)
+        changed = build.RenderedFiles(rendered.page, rendered.readme, rendered.list + "<!-- planted -->")
+        self.assertEqual(build.find_stale_files(changed), ["docs/list.md"])
 
     def test_rendering_twice_gives_the_same_bytes(self) -> None:
         register = build.load_register()

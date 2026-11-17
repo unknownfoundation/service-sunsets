@@ -17,6 +17,7 @@
   const STICKY_TOOLBAR_QUERY = "(min-width: 760px) and (min-height: 600px)";
   const TOOLBAR_READY_CLASS = "is-ready"; // styles.css keeps the toolbar invisible until this script has run
   const JUMP_TARGET_CLASS = "is-jump-target"; // :target does not follow history.replaceState, so a class marks it
+  const SUN_HEIGHT_PROPERTY = "--sun-up"; // twin of --sun-up on .upcoming-card in styles.css, which draws the sun
   // Hyphen, non-breaking hyphen, figure dash, en dash, em dash, horizontal bar and minus: names mix them.
   const DASHES = /[\u2010-\u2015\u2212]/g;
 
@@ -26,9 +27,11 @@
    * @property {(fromIsoDate: string, toIsoDate: string) => number} daysBetween
    * @property {(endDate: string, today: string) => boolean} hasEnded
    * @property {(days: number) => string} describeDaysLeft
+   * @property {(position: number, count: number) => number} sunHeight
    */
   /** @type {RegisterDatesApi} */
-  const { localIsoDate, daysBetween, hasEnded, describeDaysLeft } = /** @type {any} */ (globalThis).RegisterDates;
+  const { localIsoDate, daysBetween, hasEnded, describeDaysLeft, sunHeight } =
+    /** @type {any} */ (globalThis).RegisterDates;
 
   /**
    * @typedef {object} Labels
@@ -202,9 +205,11 @@
       const visibleLimit = cards.filter((card) => !card.hidden).length;
       const ahead = cards.filter((card) => !hasEnded(card.dataset.endDate ?? "", this.today));
       for (const card of cards) if (!ahead.includes(card)) card.remove();
+      const shown = Math.min(ahead.length, visibleLimit);
       ahead.forEach((card, position) => {
         card.hidden = position >= visibleLimit;
         card.append(this.createDaysLeft(card.dataset.endDate ?? ""));
+        if (!card.hidden) card.style.setProperty(SUN_HEIGHT_PROPERTY, String(sunHeight(position, shown)));
       });
       const section = this.upcomingList.closest("section");
       if (section && ahead.length === 0) section.hidden = true;

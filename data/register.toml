@@ -1,7 +1,7 @@
 # The register: one [[entry]] per service or feature. build.py checks this file and renders it.
 # Format: see the docstring of build.py.
 
-updated = 2026-11-02
+updated = 2026-11-17
 # Where the repository and the published page live. They answer 404 until the repository is created.
 repository_url = "https://github.com/unknownfoundation/service-sunsets"
 site_url = "https://unknownfoundation.github.io/service-sunsets/"
@@ -213,7 +213,7 @@ status = "shutdown"
 group = "Communication"
 scope = "feature"
 what = "Number masking so two people could call or text without seeing each other's real number"
-ends = 2026-03-31
+ends = 2026-04-07
 source = "https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"
 registry = ["https://docs.aws.amazon.com/general/latest/gr/full_shutdown_services.html"]
 

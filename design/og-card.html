@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!-- The source of site/og.png, the picture a chat or a social network shows beside the page's address.
+     Not published: only site/ is. To redraw it, open this file in a browser window of exactly 1200 by 630
+     and save a screenshot as site/og.png; tests/test_build.py holds the file to that size.
+     The colors are the dark side of the tokens in site/css/styles.css, and the sun is the masthead's: the same
+     bands (--sun-bands), the same disc standing 72 per cent above the horizon line. It carries no count and no
+     date, so it does not go stale with the data. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Service Sunsets: link preview card</title>
+<style>
+  :root {
+    --background: #131219; --text: #ecebf3; --text-muted: #aaa5ba; --accent: #b0a5f5; --horizon: #f0896b;
+    --horizon-line: linear-gradient(90deg, var(--accent), var(--horizon));
+    --sun-bands: linear-gradient(#000 0 44%, transparent 0 48%, #000 0 58%, transparent 0 64%, #000 0 72%,
+      transparent 0 80%, #000 0 86%, transparent 0 96%, #000 0);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    position: relative; padding: 72px 80px; background: var(--background); color: var(--text);
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  .kicker { margin: 0 0 28px; font-size: 22px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+  h1 { margin: 0 0 28px; font-size: 112px; line-height: 1; letter-spacing: -0.02em; font-weight: 700; }
+  .lede { margin: 0; max-width: 620px; font-size: 36px; line-height: 1.35; color: var(--text-muted); }
+  /* The sky stands on the horizon line; the bands are its mask. */
+  .sun {
+    position: absolute; right: 80px; bottom: 124px; width: 360px; height: 360px;
+    -webkit-mask: var(--sun-bands); mask: var(--sun-bands);
+  }
+  .sun-stop-high { stop-color: var(--horizon); }
+  .sun-stop-low { stop-color: var(--accent); }
+  .horizon { position: absolute; left: 0; right: 0; bottom: 116px; height: 8px; background: var(--horizon-line); }
+  .foot {
+    position: absolute; left: 80px; right: 80px; bottom: 44px; display: flex; justify-content: space-between;
+    margin: 0; font-size: 24px; color: var(--text-muted);
+  }
+  .foot b { color: var(--text); font-weight: 600; }
+</style>
+</head>
+<body>
+  <p class="kicker">Unofficial · not affiliated with Amazon Web Services</p>
+  <h1>Service Sunsets</h1>
+  <p class="lede">Retired AWS services: what each one did, when it ends, where to move.</p>
+  <svg class="sun" aria-hidden="true" viewBox="0 0 100 100">
+    <defs><linearGradient id="sun-fill" x1="0" y1="0" x2="0" y2="1"><stop class="sun-stop-high" offset="0"/><stop class="sun-stop-low" offset="1"/></linearGradient></defs>
+    <circle cx="50" cy="78" r="50" fill="url(#sun-fill)"/>
+  </svg>
+  <div class="horizon"></div>
+  <p class="foot"><span>Maintained by the <b>Unknown Foundation</b></span><span>unknownfoundation.github.io/service-sunsets</span></p>
+</body>
+</html>

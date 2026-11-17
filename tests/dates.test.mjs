@@ -115,6 +115,17 @@ test("days left read as people say them", () => {
   assert.equal(dates.describeDaysLeft(331), "in 331 days");
 });
 
+test("the cards' suns rise in even steps from the soonest end, never set and never fully up", () => {
+  assert.deepEqual([0, 1, 2, 3].map((position) => dates.sunHeight(position, 4)), [0.2, 0.4, 0.6, 0.8]);
+  assert.equal(dates.sunHeight(0, 1), 0.5);
+  assert.deepEqual([0, 1].map((position) => dates.sunHeight(position, 2)), [1 / 3, 2 / 3]);
+});
+
+test("planted defect: a last sun that stands fully up is caught", () => {
+  const mutant = loadDates(plantDefect("return (position + 1) / (count + 1);", "return (position + 1) / count;"));
+  assert.notEqual(mutant.sunHeight(3, 4), dates.sunHeight(3, 4));
+});
+
 test("planted defect: moving the end-date rule by one day is caught", () => {
   const mutant = loadDates(plantDefect("return endDate <= today;", "return endDate < today;"));
   assert.notEqual(mutant.hasEnded("2026-12-31", "2026-12-31"), dates.hasEnded("2026-12-31", "2026-12-31"));

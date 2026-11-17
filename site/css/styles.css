@@ -18,6 +18,7 @@
   --color-accent: light-dark(#574b90, #b0a5f5);
   --color-link-hover: light-dark(#a8402a, #f39a7e);
   --color-horizon: light-dark(#d9573a, #f0896b);
+  --color-sun-past: light-dark(#8d86a4, #736c93); /* months already past on the timeline: 3:1 on the background */
 
   --color-state-shut-down-text: light-dark(#8a2c1d, #ffb3a1);
   --color-state-shut-down-fill: light-dark(#fbe5df, #3b1f19);
@@ -69,6 +70,32 @@
   --page-max-width: 1180px;
   --text-measure: 62ch;
   --toolbar-height: 0px; /* set by app.js: the sticky toolbar's height, 0px where the toolbar does not stick */
+  --radius-round: 50%;
+
+  /* the horizon: the page's one picture. A horizon line, and a sun going down behind it, cut by bands that
+     thicken toward the line. The bands belong to the sky, not to the sun: a sun drawn lower shows fewer of
+     them. The masthead, the cards, the year headings, the timeline and the footer all draw from these. */
+  --horizon-thick: 4px;
+  --horizon-thin: 2px;
+  --horizon-line: linear-gradient(90deg, var(--color-accent), var(--color-horizon));
+  --sun-high: var(--color-horizon); /* the top of the disc */
+  --sun-low: var(--color-accent); /* the bottom of the disc, below the horizon when it sets */
+  --sun-fill: linear-gradient(var(--sun-high), var(--sun-low));
+  /* The sky of one sun, top to bottom, as a mask: only its alpha counts, so black means "drawn". Four gaps of
+     4, 6, 8 and 10 per cent of the sky's height, the widest on the horizon line. */
+  --sun-bands: linear-gradient(#000 0 44%, transparent 0 48%, #000 0 58%, transparent 0 64%, #000 0 72%,
+    transparent 0 80%, #000 0 86%, transparent 0 96%, #000 0);
+  --sun-masthead-size: 56px; /* the sky's height and the disc's diameter; wider screens below */
+  --sun-card-size: 64px; /* large enough that a sun twenty days from setting still shows a cap, not a speck */
+  /* The masthead sun's one motion: from its place it sinks slowly behind the horizon line, then appears in
+     its place again. The distance is in the drawing's own units (100 to the sky's height): the disc
+     stands 72 above the line, so 72 down is fully set. */
+  --sun-set-distance: 72px;
+  --duration-sun-set: 4400ms;
+  --ease-in-out: cubic-bezier(0.37, 0, 0.63, 1); /* a sine curve: it starts and ends softly, with no hurry between */
+  --ease-out-strong: cubic-bezier(0.22, 1, 0.36, 1);
+  --timeline-unit: 10px; /* the height of one entry in a month's bar */
+  --timeline-bar-width: 14px; /* at most; on a phone a bar fills its month */
 }
 
 :root[data-theme="light"] { color-scheme: light; }
@@ -77,6 +104,10 @@
 /* Phones get 44px targets, the size fingers need. */
 @media (max-width: 759px) {
   :root { --control-height: 2.75rem; }
+}
+/* Wide enough for the masthead's sun to stand beside the text instead of under it. */
+@media (min-width: 760px) {
+  :root { --sun-masthead-size: clamp(176px, 19vw, 264px); }
 }
 
 /* ---------- base ---------- */
@@ -131,12 +162,43 @@ h2 { margin: 0 0 var(--space-md); font-size: var(--text-2xl); font-weight: var(-
 }
 .clear-button { color: var(--color-accent); background: none; border-style: dashed; }
 
-/* ---------- masthead: one horizon line is the only decoration ---------- */
+/* ---------- masthead: the horizon, and the sun setting behind it ---------- */
 .masthead { position: relative; padding: var(--space-3xl) 0 var(--space-2xl); }
 .masthead::after {
   content: "";
-  position: absolute; left: 0; right: 0; bottom: 0; height: 4px;
-  background: linear-gradient(90deg, var(--color-accent), var(--color-horizon));
+  position: absolute; left: 0; right: 0; bottom: 0; height: var(--horizon-thick);
+  background: var(--horizon-line);
+}
+.masthead .page-width { position: relative; }
+/* The sky stands on the horizon line at the right edge of the text column; the bands are its mask, so they
+   stay put while the disc inside it settles. */
+.masthead-sun {
+  position: absolute; right: var(--space-lg); bottom: calc(var(--horizon-thick) - var(--space-2xl));
+  width: var(--sun-masthead-size); height: var(--sun-masthead-size);
+  -webkit-mask: var(--sun-bands); mask: var(--sun-bands);
+  pointer-events: none;
+}
+.sun-stop-high { stop-color: var(--sun-high); }
+.sun-stop-low { stop-color: var(--sun-low); }
+@media (prefers-reduced-motion: no-preference) {
+  .masthead-sun circle { animation: sun-set var(--duration-sun-set) both; }
+}
+/* Once, on load: a beat in its place, a slow sinking behind the line, a beat set, then it appears in its
+   place: it does not travel back up. While it is set and out of sight it turns clear and steps home (the two
+   keyframes a hundredth of a percent apart are that step), and only then shows. The bands belong to the sky,
+   so they stay put while the disc passes under them. */
+@keyframes sun-set {
+  from, 8% { transform: translateY(0); opacity: 1; animation-timing-function: var(--ease-in-out); }
+  80% { transform: translateY(var(--sun-set-distance)); opacity: 1; }
+  86% { transform: translateY(var(--sun-set-distance)); opacity: 0; }
+  86.01% { transform: translateY(0); opacity: 0; animation-timing-function: var(--ease-in-out); }
+  to { transform: translateY(0); opacity: 1; }
+}
+@media (min-width: 760px) {
+  .masthead-sun { right: var(--space-2xl); }
+  .masthead .lede, .masthead .page-meta {
+    max-width: min(var(--text-measure), calc(100% - var(--sun-masthead-size) - var(--space-xl)));
+  }
 }
 .masthead-bar {
   display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg);
@@ -161,10 +223,24 @@ h1 { margin: 0 0 var(--space-md); font-size: var(--text-display); font-weight: v
   cursor: pointer;
 }
 .theme-control button[aria-pressed="true"] { color: var(--color-background); background: var(--color-text); }
-.theme-control svg, .search-field svg {
+
+/* The way to the repository: the same height and edge as the theme switch beside it. The star fills under
+   the pointer and on focus, the one sign that it can be given. */
+.masthead-actions { display: flex; flex: none; align-items: center; gap: var(--space-sm); }
+.repo-link {
+  display: inline-flex; flex: none; align-items: center; gap: var(--space-sm);
+  height: var(--control-height); padding: 0 var(--space-lg);
+  font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-text); text-decoration: none;
+  background: var(--color-surface); border: 1px solid var(--color-control-border); border-radius: var(--radius-pill);
+}
+.repo-link:hover, .repo-link:focus-visible { color: var(--color-link-hover); border-color: currentColor; }
+.repo-link:hover svg, .repo-link:focus-visible svg { fill: currentColor; }
+.theme-control svg, .search-field svg, .repo-link svg {
   width: var(--icon-size); height: var(--icon-size);
   fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
 }
+/* GitHub's mark is a filled shape, not an outline. */
+.repo-link .icon-filled { fill: currentColor; stroke: none; }
 
 /* ---------- next to go ---------- */
 .upcoming { padding: var(--space-2xl) 0 var(--space-sm); }
@@ -172,23 +248,50 @@ h1 { margin: 0 0 var(--space-md); font-size: var(--text-display); font-weight: v
   display: grid; gap: var(--space-md); grid-template-columns: repeat(4, minmax(0, 1fr));
   margin: 0; padding: 0; list-style: none;
 }
+/* Rows: the date, the name, the replacement (it takes the slack, so every card's horizon lines up), then the
+   days left beside the sun, standing on the card's own horizon line. */
 .upcoming-card {
+  /* How high the sun stands, from 0 (set) to 1 (fully up). app.js sets it from the card's place in the row,
+     the soonest end lowest, in even steps (SUN_HEIGHT_PROPERTY, sunHeight() in dates.js); without scripts
+     every sun stands halfway. */
+  --sun-up: 0.5;
   /* A containing block for the visually hidden text inside, so the card strip clips it instead of the page
      growing wide on phones. */
   position: relative;
-  display: flex; flex-direction: column; gap: var(--space-xs); min-width: 0;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto 1fr auto auto;
+  column-gap: var(--space-md); min-width: 0;
   padding: var(--space-lg);
   background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-lg);
 }
+.upcoming-card > * { grid-column: 1 / -1; }
 .upcoming-card[hidden] { display: none; }
-.upcoming-card time {
+.upcoming-card > time {
+  margin-bottom: var(--space-xs);
   font-size: var(--text-xl); font-weight: var(--weight-bold); color: var(--color-state-end-date-set-text);
 }
+.upcoming-card > a { margin-bottom: var(--space-xs); }
 .upcoming-card a { font-weight: var(--weight-semibold); color: var(--color-text); text-decoration: none; }
 .upcoming-card a:hover { color: var(--color-accent); text-decoration: underline; }
 .card-replacement { font-size: var(--text-sm); color: var(--color-text-muted); }
 .upcoming-card .days-left {
-  margin-top: auto; padding-top: var(--space-sm); font-size: var(--text-xs); color: var(--color-text-muted);
+  grid-column: 1; grid-row: 4; align-self: end;
+  padding: var(--space-sm) 0 var(--space-xs); font-size: var(--text-xs); color: var(--color-text-muted);
+}
+/* The sun: the disc drops by what it lacks of fully up; the bands, its mask, rise by as much, so they stay
+   fixed to the sky while the disc goes down behind the line. Below the sky there is no mask: nothing shows. */
+.upcoming-card::before, .site-footer .page-width::before {
+  --sun-drop: calc((1 - var(--sun-up)) * var(--sun-size));
+  content: "";
+  width: var(--sun-size); height: var(--sun-size);
+  background: var(--sun-fill); border-radius: var(--radius-round);
+  transform: translateY(var(--sun-drop));
+  -webkit-mask: var(--sun-bands) 0 calc(-1 * var(--sun-drop)) / 100% 100% no-repeat;
+  mask: var(--sun-bands) 0 calc(-1 * var(--sun-drop)) / 100% 100% no-repeat;
+  pointer-events: none;
+}
+.upcoming-card::before { --sun-size: var(--sun-card-size); grid-column: 2; grid-row: 4; margin-top: var(--space-sm); }
+.upcoming-card::after {
+  content: ""; grid-column: 1 / -1; grid-row: 5; height: var(--horizon-thin); background: var(--horizon-line);
 }
 @media (max-width: 960px) { .upcoming-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) {
@@ -197,6 +300,35 @@ h1 { margin: 0 0 var(--space-md); font-size: var(--text-display); font-weight: v
   }
   .upcoming-card { flex: 0 0 78%; scroll-snap-align: start; }
 }
+
+/* ---------- retirements by month: one bar a month, standing on the horizon ---------- */
+/* build.py writes --months on the figure and --count on each bar; months before `updated` are .is-past. */
+.timeline { margin: 0; padding: var(--space-xl) 0 0; }
+.timeline figcaption {
+  margin: 0 0 var(--space-sm); font-size: var(--text-sm); font-weight: var(--weight-semibold);
+  color: var(--color-text-muted);
+}
+.timeline-bars, .timeline-years {
+  display: grid; grid-template-columns: repeat(var(--months), minmax(0, 1fr)); column-gap: var(--space-2xs);
+}
+.timeline-bars {
+  align-items: end; margin: 0; padding: 0; list-style: none;
+  border-bottom: var(--horizon-thin) solid; border-image: var(--horizon-line) 1;
+}
+/* A containing block for the hidden words, as on the cards. */
+.timeline-month {
+  position: relative; width: min(100%, var(--timeline-bar-width)); height: calc(var(--count) * var(--timeline-unit));
+  background: var(--sun-high);
+}
+.timeline-month.is-past { background: var(--color-sun-past); }
+.timeline-years {
+  margin-top: var(--space-xs); font-size: var(--text-xs); line-height: var(--leading-tight);
+  font-variant-numeric: tabular-nums; color: var(--color-text-muted);
+}
+.timeline-year { grid-column: span var(--months); padding-left: var(--space-xs); border-left: 1px solid var(--color-control-border); }
+/* Kept in place, so the next year's label stays under its January. */
+@media (max-width: 759px) { .timeline-year.is-short { visibility: hidden; } }
+@media (min-width: 760px) { .timeline-bars, .timeline-years { column-gap: var(--space-xs); } }
 
 /* ---------- toolbar ---------- */
 .register { padding: var(--space-2xl) 0 var(--space-sm); }
@@ -272,10 +404,11 @@ h1 { margin: 0 0 var(--space-md); font-size: var(--text-display); font-weight: v
   padding: var(--space-md); vertical-align: top; text-align: left; font-weight: inherit;
   border-bottom: 1px solid var(--color-divider);
 }
+/* Each year stands on the horizon line; the color under it covers the rows while it sticks. */
 .year-row th {
   padding: var(--space-xl) var(--space-md) var(--space-sm); text-align: left;
   font-size: var(--text-xl); font-weight: var(--weight-bold);
-  background: var(--color-background);
+  background: var(--horizon-line) left bottom / 100% var(--horizon-thin) no-repeat, var(--color-background);
 }
 /* Sticky only where there is room: on a short or narrow screen, the toolbar and a year heading stuck on top
    would cover the rows. The same query is STICKY_TOOLBAR_QUERY in app.js. */
@@ -369,15 +502,43 @@ details[open] .entry-name::before { transform: rotate(90deg); }
 .state-legend dd { margin: 0 0 var(--space-sm); font-size: var(--text-sm); color: var(--color-text-muted); }
 @media (max-width: 900px) { .reading-notes { grid-template-columns: 1fr; } }
 
-.site-footer {
-  padding: var(--space-xl) 0 var(--space-3xl); font-size: var(--text-sm); color: var(--color-text-muted);
-  border-top: 1px solid var(--color-divider);
+/* One request, after the reader has found what they came for; never a pop-up. */
+.star-ask {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: var(--space-lg) var(--space-2xl);
+  margin: 0 0 var(--space-3xl); padding: var(--space-xl);
+  background: var(--color-surface); border: 1px solid var(--color-divider); border-radius: var(--radius-lg);
 }
+.star-ask h2 { margin: 0 0 var(--space-xs); font-size: var(--text-lg); }
+.star-ask p { margin: 0; color: var(--color-text-muted); }
+
+/* The page closes on the masthead's horizon, the sun now set: a sliver above the line, where it stood. */
+.site-footer {
+  position: relative;
+  padding: var(--space-xl) 0 var(--space-3xl); font-size: var(--text-sm); color: var(--color-text-muted);
+}
+.site-footer::after {
+  content: "";
+  position: absolute; left: 0; right: 0; top: 0; height: var(--horizon-thick);
+  background: var(--horizon-line);
+}
+.site-footer .page-width { position: relative; }
+.site-footer .page-width::before {
+  --sun-size: var(--sun-masthead-size); --sun-up: 0.04;
+  position: absolute; right: var(--space-lg); bottom: calc(100% + var(--space-xl));
+}
+@media (min-width: 760px) { .site-footer .page-width::before { right: var(--space-2xl); } }
 .site-footer p { max-width: 80ch; margin: 0 0 var(--space-sm); }
 
 /* ---------- phones: rows become cards ---------- */
 @media (max-width: 759px) {
-  .masthead { padding-top: var(--space-xl); }
+  /* The sun stands under the text here, in a strip of its own above the horizon. */
+  .masthead { padding-top: var(--space-xl); padding-bottom: var(--space-3xl); }
+  .masthead-sun { bottom: calc(var(--horizon-thick) - var(--space-3xl)); }
+  /* The disclaimer takes the first line whole; the star and the theme switch share the second. */
+  .masthead-bar { flex-wrap: wrap; }
+  .kicker { flex: 1 1 100%; }
+  .masthead-actions { flex: 1 1 100%; justify-content: space-between; }
   .toolbar { gap: var(--space-sm); }
   .search-field { flex-basis: 100%; max-width: none; }
   /* The chips wrap onto more lines rather than hide some behind a sideways scroll. */
@@ -424,12 +585,15 @@ details[open] .entry-name::before { transform: rotate(90deg); }
   }
   .theme-control button[aria-pressed="true"]:focus-visible,
   .state-filter .control[aria-pressed="true"]:focus-visible { outline-offset: var(--focus-width); }
+  /* The bars carry the counts, so they keep a fill: the text color, which forced colors leave readable. */
+  .timeline-month { forced-color-adjust: none; background: CanvasText; }
 }
 
 /* Paper is light: the dark theme's pale text would print on white, since browsers drop backgrounds. */
 @media print {
   :root, :root[data-theme="light"], :root[data-theme="dark"] { color-scheme: light; }
   body { background: none; }
-  .toolbar, .skip-link, .upcoming, .reading-notes, .theme-control { display: none; }
+  /* The timeline goes too: browsers drop backgrounds on paper, and its bars are backgrounds. */
+  .toolbar, .skip-link, .upcoming, .timeline, .reading-notes, .theme-control, .repo-link, .star-ask { display: none; }
   .year-row th { position: static; }
 }

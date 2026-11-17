@@ -41,6 +41,18 @@
     return days === 1 ? "tomorrow" : `in ${days} days`;
   }
 
-  const registerDates = Object.freeze({ localIsoDate, daysBetween, hasEnded, describeDaysLeft });
+  /**
+   * How high a card's sun stands, by the card's place in the row: the soonest end is the lowest sun, and the
+   * suns rise in even steps toward the last card. Never fully set and never fully up: four cards stand at
+   * 0.2, 0.4, 0.6 and 0.8. The days themselves are written on the card; the suns show the order.
+   * @param {number} position  0 for the soonest end
+   * @param {number} count  how many cards are on show
+   * @returns {number} between 0 (set) and 1 (fully up)
+   */
+  function sunHeight(position, count) {
+    return (position + 1) / (count + 1);
+  }
+
+  const registerDates = Object.freeze({ localIsoDate, daysBetween, hasEnded, describeDaysLeft, sunHeight });
   /** @type {any} */ (globalThis).RegisterDates = registerDates;
 }
